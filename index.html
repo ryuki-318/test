@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>マイWebサイト</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding-bottom: 150px;
+      font-family: Arial, sans-serif;
+      line-height: 1.8;
+      color: #333;
+      background-color: #f5f7fa;
+    }
+
+    /* ヘッダー */
+    header {
+      background-color: #000080;
+      color: white;
+      text-align: center;
+      padding: 25px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    /* メインコンテンツ */
+    main {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      color: #FFFFFF;
+    }
+
+    section {
+      background-color: #333;
+      margin-bottom: 25px;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    section h2 {
+      color: #FFFFFF;
+      border-bottom: 2px solid #dbeafe;
+      padding-bottom: 8px;
+    }
+
+    /* フッターを画面下部に固定 */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #008080;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      z-index: 1000;
+    }
+
+    footer p {
+      margin: 3px 0;
+    }
+
+    footer a {
+      color: #FFFFFF;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* スマートフォン対応 */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 23px;
+      }
+
+      main {
+        margin: 20px auto;
+      }
+
+      section {
+        padding: 18px;
+      }
+
+      footer {
+        font-size: 12px;
+      }
+
+      footer a {
+        margin: 0 5px;
+      }
+
+      body {
+        padding-bottom: 130px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ヘッダー -->
+  <header>
+    <h1>髙橋によるおすすめ本紹介</h1>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main>
+    <section>
+      <h2>はじめに</h2>
+      <p>
+        こんにちは! 僕の名前は髙橋龍樹です！！
+        昔から本が好きだったので金欠ながら本を買えそうな時はかったり、
+        学校の図書館で読んでいました。
+        これから紹介する本は僕が個人的に好きな本やいつか読みたい本です！！
+        ほとんど有名どころですがご了承ください。
+      </p>
+    </section>
+
+    <section>
+      <h2>おすすめの本</h2>
+      <p>
+        ここでは、僕が個人的に好きな本や、
+        いつか読んでみたいと思っている本を紹介します。
+        ぜひ、自分のお気に入りの一冊を見つけてみてください！
+      </p>
+    </section>
+  </main>
+
+  <!-- フッター -->
+  <footer>
+    <p>
+      お問い合わせ：
+      <a href="mailto:info@example.com">
+        info@example.com
+      </a>
+    </p>
+
+    <p>
+      <a href="https://www.instagram.com/"
+         target="_blank" rel="noopener noreferrer">Instagram</a>
+
+      <a href="https://x.com/"
+         target="_blank" rel="noopener noreferrer">X</a>
+
+      <a href="https://www.facebook.com/"
+         target="_blank" rel="noopener noreferrer">Facebook</a>
+    </p>
+
+    <p>&copy; 2026 髙橋によるおすすめ本紹介</p>
+  </footer>
+
+</body>
+</html>
