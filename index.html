@@ -2,433 +2,697 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>髙橋によるおすすめ本紹介</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    /* ページ全体 */
-    body {
-      margin: 0;
-      padding-bottom: 125px;
-      font-family: "Yu Gothic", "Meiryo", sans-serif;
-      line-height: 1.8;
-      color: #FFFFFF;
-      background: #07152d;
-      overflow-x: hidden;
-
-      /* 本型カーソル */
-      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M3 6 Q10 3 16 8 Q22 3 29 6 L29 25 Q22 22 16 27 Q10 22 3 25 Z' fill='%23ffffff' stroke='%23008080' stroke-width='2'/%3E%3Cpath d='M16 8 L16 27 M6 10 Q11 8 14 11 M19 11 Q23 8 26 10' fill='none' stroke='%23008080' stroke-width='1.5'/%3E%3C/svg%3E") 16 16, auto;
-    }
-
-    /* 背景のグラデーション */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background:
-        radial-gradient(ellipse at 20% 30%,
-          rgba(0, 128, 128, 0.35), transparent 45%),
-        radial-gradient(ellipse at 80% 70%,
-          rgba(37, 99, 235, 0.30), transparent 45%),
-        linear-gradient(135deg, #07152d, #142d4b, #07152d);
-      background-size: 200% 200%;
-      animation: backgroundMove 12s ease-in-out infinite alternate;
-    }
-
-    @keyframes backgroundMove {
-      0% {
-        background-position: 0% 0%;
-      }
-      100% {
-        background-position: 100% 100%;
-      }
-    }
-
-    /* 浮かぶ本のページ */
-    .floating-pages {
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    .page {
-      position: absolute;
-      display: block;
-      width: 32px;
-      height: 44px;
-      background: linear-gradient(
-        135deg, #fff5d8, #d6c29a
-      );
-      opacity: 0.22;
-      border-radius: 2px;
-      box-shadow: 0 0 15px rgba(255, 230, 170, 0.15);
-      animation: floatPage 12s linear infinite;
-    }
-
-    .page::before {
-      content: "";
-      position: absolute;
-      top: 10px;
-      left: 5px;
-      width: 20px;
-      height: 1px;
-      background: #8a7857;
-      box-shadow:
-        0 6px #8a7857,
-        0 12px #8a7857,
-        0 18px #8a7857;
-      opacity: 0.65;
-    }
-
-    .page:nth-child(1) {
-      left: 8%;
-      animation-duration: 15s;
-      animation-delay: -3s;
-    }
-
-    .page:nth-child(2) {
-      left: 25%;
-      width: 24px;
-      height: 34px;
-      animation-duration: 19s;
-      animation-delay: -10s;
-    }
-
-    .page:nth-child(3) {
-      left: 45%;
-      animation-duration: 17s;
-      animation-delay: -6s;
-    }
-
-    .page:nth-child(4) {
-      left: 65%;
-      width: 26px;
-      height: 36px;
-      animation-duration: 14s;
-      animation-delay: -8s;
-    }
-
-    .page:nth-child(5) {
-      left: 83%;
-      animation-duration: 20s;
-      animation-delay: -2s;
-    }
-
-    .page:nth-child(6) {
-      left: 95%;
-      width: 22px;
-      height: 30px;
-      animation-duration: 16s;
-      animation-delay: -12s;
-    }
-
-    @keyframes floatPage {
-      0% {
-        top: 110%;
-        transform: translateX(0) rotate(0deg);
-        opacity: 0;
-      }
-      15% {
-        opacity: 0.25;
-      }
-      50% {
-        transform: translateX(55px) rotate(150deg);
-      }
-      85% {
-        opacity: 0.2;
-      }
-      100% {
-        top: -60px;
-        transform: translateX(-35px) rotate(360deg);
-        opacity: 0;
-      }
-    }
-
-    /* ヘッダー */
-    header {
-      background-color: #000080;
-      text-align: center;
-      padding: 22px 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-      letter-spacing: 2px;
-    }
-
-    header p {
-      margin: 4px 0 0;
-      color: #cbdcf5;
-      font-size: 13px;
-    }
-
-    /* メインコンテンツ */
-    main {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
-      color: #FFFFFF;
-    }
-
-    section {
-      margin-bottom: 30px;
-      padding: 28px;
-      border: 1px solid rgba(173, 216, 230, 0.4);
-      border-radius: 14px;
-      background: rgba(5, 20, 43, 0.78);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(5px);
-    }
-
-    section h2 {
-      margin-top: 0;
-      color: #FFFFFF;
-      border-bottom: 2px solid #008080;
-      padding-bottom: 10px;
-    }
-
-    section p {
-      color: #FFFFFF;
-    }
-
-    /* 本のカード */
-    .book-list {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 24px;
-    }
-
-    .book-card {
-      padding: 18px 14px;
-      text-align: center;
-      border: 1px solid rgba(147, 197, 253, 0.3);
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.06);
-      transition: transform 0.3s, background-color 0.3s;
-    }
-
-    .book-card:hover {
-      transform: translateY(-6px);
-      background: rgba(0, 128, 128, 0.2);
-    }
-
-    .book-icon {
-      font-size: 42px;
-      margin-bottom: 8px;
-    }
-
-    .book-card h3 {
-      font-size: 17px;
-      margin: 5px 0;
-    }
-
-    .book-card p {
-      font-size: 14px;
-    }
-
-    /* リンクのカーソル */
-    a {
-      cursor: pointer;
-    }
-
-    .book-link {
-      display: inline-block;
-      color: #FFFFFF;
-      border: 1px solid #008080;
-      border-radius: 20px;
-      padding: 5px 16px;
-      text-decoration: none;
-      font-size: 13px;
-      transition: background-color 0.2s;
-    }
-
-    .book-link:hover {
-      background-color: #008080;
-    }
-
-    /* フッター */
-    footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background-color: #008080;
-      color: #FFFFFF;
-      text-align: center;
-      padding: 10px;
-      font-size: 13px;
-      z-index: 10;
-      box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    footer p {
-      margin: 2px 0;
-    }
-
-    footer a {
-      color: #FFFFFF;
-      text-decoration: none;
-      margin: 0 8px;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    /* スマートフォン対応 */
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 21px;
-      }
-
-      main {
-        margin: 24px auto;
-        padding: 0 14px;
-      }
-
-      section {
-        padding: 18px;
-      }
-
-      .book-list {
-        grid-template-columns: 1fr;
-      }
-
-      footer {
-        font-size: 11px;
-        padding: 8px 4px;
-      }
-
-      footer a {
-        margin: 0 4px;
-      }
-
-      body {
-        padding-bottom: 110px;
-      }
-    }
-
-    /* 動きを減らす設定の端末ではアニメーションを停止 */
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation: none !important;
-        transition: none !important;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>髙橋の図書館 | おすすめ本紹介</title>
+<style>
+:root {
+  --navy: #000080;
+  --teal: #008080;
+  --bg: #07152d;
+  --panel: rgba(12, 29, 54, .91);
+  --text: #fff;
+  --muted: #c1d0e5;
+  --line: rgba(150, 200, 255, .24);
+  --gold: #ffd777;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Yu Gothic", Meiryo, sans-serif;
+  line-height: 1.8;
+  padding-bottom: 100px;
+  transition: background .3s, color .3s;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M3 6 Q10 3 16 8 Q22 3 29 6 L29 25 Q22 22 16 27 Q10 22 3 25Z' fill='%23ffffff' stroke='%23008080' stroke-width='2'/%3E%3Cpath d='M16 8V27' stroke='%23008080' stroke-width='2'/%3E%3C/svg%3E") 16 16, auto;
+}
+body.light {
+  --bg: #eef3fa;
+  --panel: rgba(255,255,255,.95);
+  --text: #18263b;
+  --muted: #50627a;
+  --line: #cbd7e7;
+}
+a, button, select, input, textarea { cursor: pointer; }
+button, input, select, textarea {
+  font: inherit;
+}
+button {
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: rgba(0,128,128,.22);
+  color: var(--text);
+  padding: 8px 13px;
+  transition: transform .2s, background .2s;
+}
+button:hover { transform: translateY(-2px); background: rgba(0,128,128,.48); }
+button:focus-visible, a:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible {
+  outline: 2px solid #69caff;
+  outline-offset: 3px;
+}
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+select option { background: var(--bg); color: var(--text); }
+label { display: block; font-size: .9rem; margin: 8px 0 4px; }
+header {
+  position: relative;
+  z-index: 2;
+  background: var(--navy);
+  text-align: center;
+  padding: 20px 16px;
+  border-bottom: 2px solid var(--teal);
+}
+header h1 { margin: 0; font-size: clamp(1.4rem, 4vw, 2.2rem); }
+header p { margin: 2px 0; color: #d5e4ff; }
+nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+nav a { color: #fff; padding: 5px 10px; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+#scene {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 15% 35%, rgba(0,128,128,.32), transparent 45%),
+    radial-gradient(ellipse at 85% 75%, rgba(53,94,180,.35), transparent 45%),
+    linear-gradient(135deg,#07152d,#132b48,#07152d);
+  background-size: 200% 200%;
+  animation: glow 14s ease-in-out infinite alternate;
+}
+@keyframes glow { to { background-position: 100% 100%; } }
+.particle {
+  position: absolute;
+  top: -50px;
+  color: #f8e6b5;
+  opacity: .32;
+  animation: drift linear infinite;
+  text-shadow: 0 0 12px #ffe9b0;
+}
+@keyframes drift {
+  0% { transform: translate(0,0) rotate(0); }
+  50% { transform: translate(45px,50vh) rotate(180deg); }
+  100% { transform: translate(-20px,110vh) rotate(360deg); }
+}
+main { max-width: 1100px; margin: 28px auto; padding: 0 18px; }
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 12px 35px rgba(0,0,0,.18);
+  backdrop-filter: blur(8px);
+}
+h2 { border-bottom: 2px solid var(--teal); padding-bottom: 8px; }
+.muted { color: var(--muted); }
+.toolbar, .stats, .actions, .filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.stats { margin-top: 16px; }
+.stat {
+  flex: 1 1 130px;
+  background: rgba(0,128,128,.15);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+}
+.stat strong { display: block; font-size: 1.5rem; color: var(--gold); }
+.filters > * { flex: 1 1 170px; }
+#search { flex: 2 1 240px; }
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(205px,1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+.book {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: rgba(100,150,210,.07);
+  transition: transform .25s, border-color .25s;
+  animation: appear .35s ease both;
+}
+.book:hover { transform: translateY(-5px); border-color: var(--teal); }
+@keyframes appear { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.cover {
+  height: 165px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  background: linear-gradient(145deg,#152b50,#008080);
+  color: white;
+  font-size: 3rem;
+}
+.cover img { width: 100%; height: 100%; object-fit: cover; }
+.book h3 { margin: 4px 0; line-height: 1.5; }
+.book p { margin: 5px 0; font-size: .9rem; }
+.tag {
+  display: inline-block;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 2px 8px;
+  font-size: .75rem;
+  color: var(--muted);
+}
+.favorite { color: var(--gold); }
+.small { font-size: .82rem; }
+.actions { margin-top: 12px; }
+.actions button { flex: 1 1 auto; }
+.primary { background: var(--teal); color: white; }
+.danger { border-color: #d66; }
+.empty { text-align: center; padding: 35px 10px; color: var(--muted); }
+.progress {
+  height: 10px; background: rgba(130,160,200,.2);
+  border-radius: 20px; overflow: hidden; margin: 8px 0;
+}
+.progress span { display: block; height: 100%; width: 0; background: var(--teal); transition: width .3s; }
+.form-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px 16px; }
+.full { grid-column: 1 / -1; }
+dialog {
+  width: min(600px,calc(100% - 24px));
+  max-height: 85vh;
+  overflow-y: auto;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 24px;
+}
+dialog::backdrop { background: rgba(0,0,0,.7); backdrop-filter: blur(4px); }
+dialog h2 { margin-top: 0; }
+#toast {
+  position: fixed; left: 50%; bottom: 110px;
+  transform: translateX(-50%);
+  z-index: 30; background: var(--teal); color: white;
+  border-radius: 10px; padding: 10px 18px;
+  opacity: 0; pointer-events: none; transition: opacity .2s;
+}
+#toast.show { opacity: 1; }
+footer {
+  position: fixed; bottom: 0; left: 0; width: 100%;
+  z-index: 10; text-align: center;
+  background: #008080; color: white;
+  padding: 8px; font-size: 12px;
+  box-shadow: 0 -4px 18px rgba(0,0,0,.2);
+}
+footer p { margin: 2px; }
+footer a { color: white; margin: 0 6px; }
+#timerDisplay { font-size: 1.5rem; font-weight: bold; }
+@media(max-width:600px) {
+  main { padding: 0 10px; margin: 16px auto; }
+  .panel { padding: 16px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .full { grid-column: auto; }
+  footer { font-size: 10px; }
+  body { padding-bottom: 90px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after { animation: none !important; scroll-behavior: auto !important; transition: none !important; }
+}
+</style>
 </head>
-
 <body>
+<div id="scene" aria-hidden="true"></div>
 
-  <!-- 動く背景 -->
-  <div class="floating-pages" aria-hidden="true">
-    <span class="page"></span>
-    <span class="page"></span>
-    <span class="page"></span>
-    <span class="page"></span>
-    <span class="page"></span>
-    <span class="page"></span>
-  </div>
+<header>
+  <h1>📚 髙橋によるおすすめ本紹介</h1>
+  <p>本との出会いが、世界を広げる。</p>
+  <nav>
+    <a href="#about">はじめに</a>
+    <a href="#shelf">本棚</a>
+    <a href="#record">読書記録</a>
+    <a href="#tools">便利ツール</a>
+  </nav>
+</header>
 
-  <!-- ヘッダー -->
-  <header>
-    <h1>髙橋によるおすすめ本紹介</h1>
-    <p>本との出会いが、世界を広げる。</p>
-  </header>
+<main>
+  <section id="about" class="panel">
+    <h2>📖 はじめに</h2>
+    <p>こんにちは！僕の名前は髙橋龍樹です！！昔から本が好きで、買えそうな時に本を買ったり、学校の図書館で読んだりしていました。</p>
+    <p>ここでは、僕が好きな本や、いつか読みたい本を紹介します。気になる一冊を見つけていってください！</p>
+    <div class="stats">
+      <div class="stat"><span>本棚の冊数</span><strong id="totalCount">0</strong></div>
+      <div class="stat"><span>読了した本</span><strong id="readCount">0</strong></div>
+      <div class="stat"><span>お気に入り</span><strong id="favCount">0</strong></div>
+      <div class="stat"><span>読了率</span><strong id="readRate">0%</strong></div>
+    </div>
+    <div class="progress"><span id="progressBar"></span></div>
+    <p id="dailyPick" class="muted">今日の一冊を選んでみよう。</p>
+    <button onclick="randomBook()">🎲 ランダムに一冊選ぶ</button>
+  </section>
 
-  <!-- メイン -->
-  <main>
-    <section>
-      <h2>📖 はじめに</h2>
-      <p>
-        こんにちは！僕の名前は髙橋龍樹です！！
-        昔から本が好きだったので、金欠ながら本を買えそうな時は買ったり、
-        学校の図書館で読んでいました。
-      </p>
-      <p>
-        これから紹介する本は、僕が個人的に好きな本や、
-        いつか読みたい本です！！
-        ほとんど有名どころですが、ご了承ください。
-      </p>
-    </section>
+  <section id="shelf" class="panel">
+    <h2>📚 おすすめの本棚</h2>
+    <p class="muted">本を検索したり、ジャンルで絞り込んだり、お気に入りを集めたりできます。</p>
+    <div class="filters">
+      <input id="search" placeholder="🔍 タイトル・著者・感想を検索..." aria-label="本を検索">
+      <select id="genreFilter" aria-label="ジャンルで絞り込み">
+        <option value="">すべてのジャンル</option>
+      </select>
+      <select id="statusFilter" aria-label="読書状況で絞り込み">
+        <option value="">すべての読書状況</option>
+        <option value="読みたい">読みたい</option>
+        <option value="読書中">読書中</option>
+        <option value="読了">読了</option>
+      </select>
+      <select id="sortBy" aria-label="並び替え">
+        <option value="new">登録が新しい順</option>
+        <option value="title">タイトル順</option>
+        <option value="rating">評価が高い順</option>
+      </select>
+    </div>
+    <p><label><input id="favoritesOnly" type="checkbox" style="width:auto"> ★ お気に入りだけ表示</label></p>
+    <div class="toolbar">
+      <button class="primary" onclick="openBookForm()">＋ 本を追加</button>
+      <button onclick="exportData()">💾 データを書き出す</button>
+      <button onclick="document.getElementById('importFile').click()">📂 データを読み込む</button>
+      <input type="file" id="importFile" accept=".json,application/json" hidden>
+    </div>
+    <div id="bookGrid" class="book-grid"></div>
+    <p id="resultCount" class="muted small"></p>
+  </section>
 
-    <section>
-      <h2>📚 おすすめの本</h2>
-      <p>
-        ここでは、おすすめの本や気になっている本を紹介します。
-        あなたのお気に入りの一冊も見つかるかもしれません！
-      </p>
+  <section id="record" class="panel">
+    <h2>📝 読書記録</h2>
+    <p>本を開いて読書状況・星評価・感想を更新すると、ここに記録されます。</p>
+    <div id="recordList"></div>
+  </section>
 
-      <div class="book-list">
-        <article class="book-card">
-          <div class="book-icon" aria-hidden="true">📘</div>
-          <h3>おすすめ本 1</h3>
-          <p>心に残る物語に出会いたい人に。</p>
-          <a class="book-link"
-             href="https://www.google.com/search?q=おすすめ小説"
-             target="_blank" rel="noopener noreferrer">
-            本を調べる →
-          </a>
-        </article>
+  <section id="tools" class="panel">
+    <h2>⏱️ 読書タイマー</h2>
+    <p class="muted">25分集中して読書するポモドーロタイマーです。</p>
+    <div id="timerDisplay">25:00</div>
+    <div class="actions">
+      <button class="primary" id="timerStart">▶ スタート</button>
+      <button id="timerReset">↺ リセット</button>
+    </div>
+    <hr style="border-color:var(--line);margin:22px 0">
+    <h3>⚙️ 表示設定</h3>
+    <div class="actions">
+      <button id="themeToggle">☀️ ライト／ダーク切替</button>
+      <button id="fontDown">A− 文字を小さく</button>
+      <button id="fontUp">A＋ 文字を大きく</button>
+      <button id="motionToggle">✨ 背景アニメーション切替</button>
+    </div>
+    <p class="muted small">読書データはこのブラウザに保存されます。別の端末やブラウザとは自動同期されません。</p>
+    <button class="danger" onclick="clearAllData()">保存データをすべて削除</button>
+  </section>
+</main>
 
-        <article class="book-card">
-          <div class="book-icon" aria-hidden="true">📗</div>
-          <h3>おすすめ本 2</h3>
-          <p>新しい考え方を知りたい人に。</p>
-          <a class="book-link"
-             href="https://www.google.com/search?q=人気の小説"
-             target="_blank" rel="noopener noreferrer">
-            本を調べる →
-          </a>
-        </article>
+<footer>
+  <p>お問い合わせ：<a href="mailto:info@example.com">info@example.com</a></p>
+  <p>
+    <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a> |
+    <a href="https://x.com/" target="_blank" rel="noopener noreferrer">X</a> |
+    <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">Facebook</a>
+  </p>
+  <p>© 2026 髙橋によるおすすめ本紹介</p>
+</footer>
 
-        <article class="book-card">
-          <div class="book-icon" aria-hidden="true">📕</div>
-          <h3>いつか読みたい本</h3>
-          <p>次に読んでみたい気になる一冊。</p>
-          <a class="book-link"
-             href="https://www.google.com/search?q=話題の本"
-             target="_blank" rel="noopener noreferrer">
-            本を調べる →
-          </a>
-        </article>
+<dialog id="bookDialog">
+  <h2 id="formTitle">本を追加</h2>
+  <form id="bookForm">
+    <div class="form-grid">
+      <div><label for="bookTitle">タイトル *</label><input id="bookTitle" required maxlength="100"></div>
+      <div><label for="bookAuthor">著者</label><input id="bookAuthor" maxlength="100"></div>
+      <div><label for="bookGenre">ジャンル</label>
+        <input id="bookGenre" list="genreOptions" maxlength="40" placeholder="小説、ミステリーなど">
+        <datalist id="genreOptions"><option value="小説"><option value="ファンタジー"><option value="ミステリー"><option value="文学"><option value="自己啓発"><option value="ノンフィクション"><option value="その他"></datalist>
       </div>
-    </section>
-  </main>
+      <div><label for="bookStatus">読書状況</label>
+        <select id="bookStatus"><option>読みたい</option><option>読書中</option><option>読了</option></select>
+      </div>
+      <div><label for="bookRating">評価</label>
+        <select id="bookRating"><option value="0">未評価</option><option value="1">★☆☆☆☆</option><option value="2">★★☆☆☆</option><option value="3">★★★☆☆</option><option value="4">★★★★☆</option><option value="5">★★★★★</option></select>
+      </div>
+      <div><label for="bookCover">表紙画像URL（任意）</label><input id="bookCover" type="url" placeholder="https://..."></div>
+      <div class="full"><label for="bookDescription">あらすじ・紹介</label><textarea id="bookDescription" rows="3" maxlength="1500"></textarea></div>
+      <div class="full"><label for="bookMemo">自分の感想・メモ</label><textarea id="bookMemo" rows="3" maxlength="3000"></textarea></div>
+    </div>
+    <p class="muted small">タイトル以外はあとから編集できます。</p>
+    <div class="actions">
+      <button type="submit" class="primary">保存する</button>
+      <button type="button" onclick="closeBookForm()">キャンセル</button>
+    </div>
+  </form>
+</dialog>
 
-  <!-- フッター -->
-  <footer>
-    <p>
-      お問い合わせ：
-      <a href="mailto:info@example.com">info@example.com</a>
-    </p>
+<dialog id="detailDialog">
+  <div id="detailContent"></div>
+  <div class="actions"><button onclick="document.getElementById('detailDialog').close()">閉じる</button></div>
+</dialog>
+<div id="toast" role="status" aria-live="polite"></div>
 
-    <p>
-      <a href="https://www.instagram.com/"
-         target="_blank" rel="noopener noreferrer">Instagram</a>
-      |
-      <a href="https://x.com/"
-         target="_blank" rel="noopener noreferrer">X</a>
-      |
-      <a href="https://www.facebook.com/"
-         target="_blank" rel="noopener noreferrer">Facebook</a>
-    </p>
+<script>
+"use strict";
 
-    <p>&copy; 2026 髙橋によるおすすめ本紹介</p>
-  </footer>
+const STORAGE_KEY = "takahashiBookLibraryV1";
+const initialBooks = [
+  {id:"demo1",title:"君の名は。",author:"新海 誠",genre:"小説",status:"読みたい",rating:0,favorite:false,cover:"",description:"時を超えてつながる、ふたりの出会いを描いた物語。",memo:"",created:1},
+  {id:"demo2",title:"アルケミスト",author:"パウロ・コエーリョ",genre:"文学",status:"読みたい",rating:0,favorite:false,cover:"",description:"夢を追う旅を通して、自分の人生を見つめ直す物語。",memo:"",created:2},
+  {id:"demo3",title:"ノルウェイの森",author:"村上 春樹",genre:"文学",status:"読みたい",rating:0,favorite:false,cover:"",description:"喪失や成長、若者たちの心を描いた小説。",memo:"",created:3}
+];
 
+let books = loadBooks();
+let editingId = null;
+let timerSeconds = 25 * 60;
+let timerInterval = null;
+let fontSize = Number(localStorage.getItem("bookFontSize")) || 16;
+let motionOff = localStorage.getItem("bookMotionOff") === "true";
+let toastTimeout;
+
+function loadBooks() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved === null) return initialBooks.map(b => ({...b}));
+    const parsed = JSON.parse(saved);
+    return Array.isArray(parsed) ? parsed : initialBooks.map(b => ({...b}));
+  } catch {
+    return initialBooks.map(b => ({...b}));
+  }
+}
+function saveBooks() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
+    renderAll();
+  } catch {
+    toast("保存できませんでした。データを書き出して保管してください。");
+  }
+}
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[c]);
+}
+function safeCover(url) {
+  try {
+    const u = new URL(url);
+    return ["http:","https:"].includes(u.protocol) ? u.href : "";
+  } catch { return ""; }
+}
+function toast(message) {
+  const el = document.getElementById("toast");
+  el.textContent = message;
+  el.classList.add("show");
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => el.classList.remove("show"), 2300);
+}
+function renderAll() {
+  renderGenres();
+  renderBooks();
+  renderStats();
+  renderRecords();
+}
+function renderGenres() {
+  const select = document.getElementById("genreFilter");
+  const old = select.value;
+  const genres = [...new Set(books.map(b => b.genre).filter(Boolean))].sort();
+  select.innerHTML = '<option value="">すべてのジャンル</option>' +
+    genres.map(g => `<option value="${escapeHTML(g)}">${escapeHTML(g)}</option>`).join("");
+  if (genres.includes(old)) select.value = old;
+}
+function renderBooks() {
+  const query = document.getElementById("search").value.trim().toLowerCase();
+  const genre = document.getElementById("genreFilter").value;
+  const status = document.getElementById("statusFilter").value;
+  const sort = document.getElementById("sortBy").value;
+  const favoritesOnly = document.getElementById("favoritesOnly").checked;
+
+  let list = books.filter(b => {
+    const haystack = [b.title,b.author,b.genre,b.description,b.memo].join(" ").toLowerCase();
+    return haystack.includes(query) &&
+      (!genre || b.genre === genre) &&
+      (!status || b.status === status) &&
+      (!favoritesOnly || b.favorite);
+  });
+  if (sort === "title") list.sort((a,b) => a.title.localeCompare(b.title,"ja"));
+  if (sort === "rating") list.sort((a,b) => b.rating-a.rating);
+  if (sort === "new") list.sort((a,b) => b.created-a.created);
+
+  document.getElementById("resultCount").textContent = `${list.length}冊を表示中（全${books.length}冊）`;
+  const grid = document.getElementById("bookGrid");
+  if (!list.length) {
+    grid.innerHTML = '<div class="empty" style="grid-column:1/-1">📭 本が見つかりません。検索条件を変えるか、本を追加してみてください。</div>';
+    return;
+  }
+  grid.innerHTML = list.map(b => {
+    const cover = safeCover(b.cover);
+    return `<article class="book">
+      <div class="cover">${cover ? `<img src="${escapeHTML(cover)}" alt="${escapeHTML(b.title)}の表紙" loading="lazy" onerror="this.remove();this.parentElement.textContent='📚'">` : "📚"}</div>
+      <div class="toolbar"><span class="tag">${escapeHTML(b.genre || "ジャンル未設定")}</span><span class="tag">${escapeHTML(b.status)}</span></div>
+      <h3>${escapeHTML(b.title)}</h3>
+      <p class="muted">${escapeHTML(b.author || "著者未設定")}</p>
+      <p class="favorite">${b.rating ? "★".repeat(b.rating)+"☆".repeat(5-b.rating) : "未評価"} ${b.favorite ? "　♥ お気に入り" : ""}</p>
+      <p>${escapeHTML((b.description || "紹介文はまだありません。").slice(0,85))}${(b.description || "").length>85 ? "…" : ""}</p>
+      <div class="actions">
+        <button class="primary" onclick="showDetails('${b.id}')">詳細</button>
+        <button onclick="toggleFavorite('${b.id}')" aria-label="お気に入り切替">${b.favorite ? "♥" : "♡"}</button>
+        <button onclick="openBookForm('${b.id}')">編集</button>
+        <button class="danger" onclick="deleteBook('${b.id}')">削除</button>
+      </div>
+    </article>`;
+  }).join("");
+}
+function renderStats() {
+  const read = books.filter(b => b.status === "読了").length;
+  document.getElementById("totalCount").textContent = books.length;
+  document.getElementById("readCount").textContent = read;
+  document.getElementById("favCount").textContent = books.filter(b => b.favorite).length;
+  const rate = books.length ? Math.round(read / books.length * 100) : 0;
+  document.getElementById("readRate").textContent = rate + "%";
+  document.getElementById("progressBar").style.width = rate + "%";
+}
+function renderRecords() {
+  const list = books.filter(b => b.status !== "読みたい" || b.memo || b.rating);
+  document.getElementById("recordList").innerHTML = list.length ? list
+    .sort((a,b) => b.created-a.created)
+    .map(b => `<div style="border-bottom:1px solid var(--line);padding:10px 0">
+      <strong>${escapeHTML(b.title)}</strong> <span class="tag">${escapeHTML(b.status)}</span>
+      <div class="muted small">${b.rating ? "評価："+"★".repeat(b.rating) : "評価なし"}</div>
+      <p>${escapeHTML(b.memo || "感想はまだ書かれていません。")}</p>
+      <button onclick="openBookForm('${b.id}')">記録を編集</button>
+    </div>`).join("") : '<p class="muted">読書記録はまだありません。本のステータスや感想を更新すると、ここに表示されます。</p>';
+}
+function openBookForm(id=null) {
+  editingId = id;
+  const b = books.find(x => x.id === id);
+  document.getElementById("formTitle").textContent = b ? "本を編集" : "本を追加";
+  document.getElementById("bookTitle").value = b?.title || "";
+  document.getElementById("bookAuthor").value = b?.author || "";
+  document.getElementById("bookGenre").value = b?.genre || "";
+  document.getElementById("bookStatus").value = b?.status || "読みたい";
+  document.getElementById("bookRating").value = b?.rating || 0;
+  document.getElementById("bookCover").value = b?.cover || "";
+  document.getElementById("bookDescription").value = b?.description || "";
+  document.getElementById("bookMemo").value = b?.memo || "";
+  document.getElementById("bookDialog").showModal();
+}
+function closeBookForm() {
+  document.getElementById("bookDialog").close();
+}
+document.getElementById("bookForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const title = document.getElementById("bookTitle").value.trim();
+  if (!title) return;
+  const old = books.find(b => b.id === editingId);
+  const item = {
+    id: old?.id || (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())),
+    title,
+    author: document.getElementById("bookAuthor").value.trim(),
+    genre: document.getElementById("bookGenre").value.trim() || "その他",
+    status: document.getElementById("bookStatus").value,
+    rating: Number(document.getElementById("bookRating").value),
+    cover: safeCover(document.getElementById("bookCover").value.trim()),
+    description: document.getElementById("bookDescription").value.trim(),
+    memo: document.getElementById("bookMemo").value.trim(),
+    favorite: old?.favorite || false,
+    created: old?.created || Date.now()
+  };
+  if (old) books = books.map(b => b.id === old.id ? item : b);
+  else books.push(item);
+  closeBookForm();
+  saveBooks();
+  toast(old ? "本の情報を更新しました！" : "本棚に本を追加しました！");
+});
+function toggleFavorite(id) {
+  books = books.map(b => b.id === id ? {...b,favorite:!b.favorite} : b);
+  saveBooks();
+}
+function deleteBook(id) {
+  const b = books.find(x => x.id === id);
+  if (!b || !confirm(`「${b.title}」を本棚から削除しますか？`)) return;
+  books = books.filter(x => x.id !== id);
+  saveBooks();
+  toast("本を削除しました。");
+}
+function showDetails(id) {
+  const b = books.find(x => x.id === id);
+  if (!b) return;
+  const cover = safeCover(b.cover);
+  document.getElementById("detailContent").innerHTML = `
+    <h2>${escapeHTML(b.title)}</h2>
+    ${cover ? `<img src="${escapeHTML(cover)}" alt="表紙" style="max-width:150px;max-height:220px;object-fit:contain">` : "<div style='font-size:3rem'>📚</div>"}
+    <p>著者：${escapeHTML(b.author || "未設定")}</p>
+    <p>ジャンル：${escapeHTML(b.genre || "未設定")}</p>
+    <p>読書状況：${escapeHTML(b.status)}</p>
+    <p>評価：${b.rating ? "★".repeat(b.rating)+"☆".repeat(5-b.rating) : "未評価"}</p>
+    <h3>本の紹介</h3><p>${escapeHTML(b.description || "紹介文はありません。").replace(/\n/g,"<br>")}</p>
+    <h3>自分の感想</h3><p>${escapeHTML(b.memo || "感想はまだありません。").replace(/\n/g,"<br>")}</p>
+    <div class="actions">
+      <button class="primary" onclick="document.getElementById('detailDialog').close();openBookForm('${b.id}')">編集・読書記録</button>
+      <button onclick="toggleFavorite('${b.id}');showDetails('${b.id}')">${b.favorite ? "♥ お気に入り解除" : "♡ お気に入りに追加"}</button>
+    </div>`;
+  document.getElementById("detailDialog").showModal();
+}
+function randomBook() {
+  if (!books.length) { toast("まず本を追加してね！"); return; }
+  const b = books[Math.floor(Math.random()*books.length)];
+  document.getElementById("dailyPick").textContent = `🎲 今日の一冊：「${b.title}」／${b.author || "著者未設定"}`;
+  showDetails(b.id);
+}
+function exportData() {
+  const blob = new Blob([JSON.stringify(books,null,2)],{type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "takahashi-books.json";
+  a.click();
+  URL.revokeObjectURL(url);
+  toast("データを書き出しました！");
+}
+document.getElementById("importFile").addEventListener("change", async e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  try {
+    const parsed = JSON.parse(await file.text());
+    if (!Array.isArray(parsed) || !parsed.every(b => b && typeof b.title === "string")) {
+      throw new Error("invalid format");
+    }
+    if (!confirm("現在の本棚を読み込んだデータで置き換えますか？")) return;
+    books = parsed.map((b,i) => ({
+      id: String(b.id || Date.now()+i),
+      title: b.title.slice(0,100),
+      author: String(b.author || "").slice(0,100),
+      genre: String(b.genre || "その他").slice(0,40),
+      status: ["読みたい","読書中","読了"].includes(b.status) ? b.status : "読みたい",
+      rating: Math.max(0,Math.min(5,Number(b.rating)||0)),
+      cover: safeCover(String(b.cover || "")),
+      description: String(b.description || "").slice(0,1500),
+      memo: String(b.memo || "").slice(0,3000),
+      favorite: Boolean(b.favorite),
+      created: Number(b.created) || Date.now()+i
+    }));
+    saveBooks();
+    toast("本棚データを読み込みました！");
+  } catch {
+    toast("ファイルを読み込めませんでした。JSON形式を確認してください。");
+  } finally { e.target.value = ""; }
+});
+function clearAllData() {
+  if (!confirm("本棚・読書記録をすべて削除します。この操作は取り消せません。")) return;
+  books = [];
+  saveBooks();
+  toast("データを削除しました。");
+}
+["search","genreFilter","statusFilter","sortBy","favoritesOnly"].forEach(id => {
+  document.getElementById(id).addEventListener("input",renderBooks);
+  document.getElementById(id).addEventListener("change",renderBooks);
+});
+
+/* 読書タイマー */
+function updateTimer() {
+  const m = String(Math.floor(timerSeconds/60)).padStart(2,"0");
+  const s = String(timerSeconds%60).padStart(2,"0");
+  document.getElementById("timerDisplay").textContent = `${m}:${s}`;
+}
+document.getElementById("timerStart").addEventListener("click",() => {
+  if (timerInterval) {
+    clearInterval(timerInterval); timerInterval = null;
+    document.getElementById("timerStart").textContent = "▶ 再開";
+    return;
+  }
+  if (timerSeconds <= 0) timerSeconds = 25*60;
+  document.getElementById("timerStart").textContent = "⏸ 一時停止";
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimer();
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval); timerInterval = null;
+      document.getElementById("timerStart").textContent = "▶ もう一度";
+      toast("25分間の読書、お疲れさま！少し休憩しよう ☕");
+      if ("Notification" in window && Notification.permission === "granted") {
+        new Notification("読書タイマー",{body:"25分間の読書が終わりました！"});
+      }
+    }
+  },1000);
+});
+document.getElementById("timerReset").addEventListener("click",() => {
+  clearInterval(timerInterval); timerInterval = null;
+  timerSeconds = 25*60; updateTimer();
+  document.getElementById("timerStart").textContent = "▶ スタート";
+});
+document.getElementById("themeToggle").addEventListener("click",() => {
+  document.body.classList.toggle("light");
+  localStorage.setItem("bookTheme",document.body.classList.contains("light") ? "light" : "dark");
+});
+if (localStorage.getItem("bookTheme")==="light") document.body.classList.add("light");
+function applyFont() {
+  document.documentElement.style.fontSize = fontSize+"px";
+  localStorage.setItem("bookFontSize",fontSize);
+}
+document.getElementById("fontUp").addEventListener("click",() => {
+  fontSize = Math.min(22,fontSize+1); applyFont();
+});
+document.getElementById("fontDown").addEventListener("click",() => {
+  fontSize = Math.max(12,fontSize-1); applyFont();
+});
+applyFont();
+document.getElementById("motionToggle").addEventListener("click",() => {
+  motionOff = !motionOff;
+  document.getElementById("scene").style.animation = motionOff ? "none" : "";
+  document.querySelectorAll(".particle").forEach(p => p.style.animationPlayState = motionOff ? "paused" : "running");
+  localStorage.setItem("bookMotionOff",String(motionOff));
+  toast(motionOff ? "背景の動きを停止しました。" : "背景の動きを再開しました。");
+});
+
+/* 背景のページ・光の粒 */
+const scene = document.getElementById("scene");
+for (let i=0;i<24;i++) {
+  const p = document.createElement("span");
+  p.className = "particle";
+  p.textContent = i%3===0 ? "✦" : i%3===1 ? "·" : "✧";
+  p.style.left = Math.random()*100+"%";
+  p.style.fontSize = (10+Math.random()*22)+"px";
+  p.style.animationDuration = (12+Math.random()*20)+"s";
+  p.style.animationDelay = (-Math.random()*25)+"s";
+  if (motionOff) p.style.animationPlayState = "paused";
+  scene.appendChild(p);
+}
+renderAll();
+updateTimer();
+</script>
 </body>
 </html>
