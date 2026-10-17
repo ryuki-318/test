@@ -3,695 +3,750 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>髙橋の図書館 | おすすめ本紹介</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>髙橋によるおすすめ本紹介</title>
 <style>
 :root {
   --navy: #000080;
   --teal: #008080;
-  --bg: #07152d;
-  --panel: rgba(12, 29, 54, .91);
-  --text: #fff;
-  --muted: #c1d0e5;
-  --line: rgba(150, 200, 255, .24);
-  --gold: #ffd777;
+  --bg: #f3f7fc;
+  --card: #fff;
+  --text: #17243a;
+  --muted: #68758b;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
+  font-family: "Noto Sans JP", sans-serif;
   background: var(--bg);
   color: var(--text);
-  font-family: "Yu Gothic", Meiryo, sans-serif;
-  line-height: 1.8;
-  padding-bottom: 100px;
-  transition: background .3s, color .3s;
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M3 6 Q10 3 16 8 Q22 3 29 6 L29 25 Q22 22 16 27 Q10 22 3 25Z' fill='%23ffffff' stroke='%23008080' stroke-width='2'/%3E%3Cpath d='M16 8V27' stroke='%23008080' stroke-width='2'/%3E%3C/svg%3E") 16 16, auto;
+  line-height: 1.7;
+  overflow-x: hidden;
 }
-body.light {
-  --bg: #eef3fa;
-  --panel: rgba(255,255,255,.95);
-  --text: #18263b;
-  --muted: #50627a;
-  --line: #cbd7e7;
+body.dark {
+  --bg: #101827;
+  --card: #1b283b;
+  --text: #eef4ff;
+  --muted: #afbdd0;
 }
-a, button, select, input, textarea { cursor: pointer; }
-button, input, select, textarea {
-  font: inherit;
-}
-button {
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  background: rgba(0,128,128,.22);
-  color: var(--text);
-  padding: 8px 13px;
-  transition: transform .2s, background .2s;
-}
-button:hover { transform: translateY(-2px); background: rgba(0,128,128,.48); }
-button:focus-visible, a:focus-visible, input:focus-visible,
-select:focus-visible, textarea:focus-visible {
-  outline: 2px solid #69caff;
-  outline-offset: 3px;
-}
-input, select, textarea {
-  width: 100%;
-  padding: 10px;
-  color: var(--text);
-  background: var(--bg);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-}
-select option { background: var(--bg); color: var(--text); }
-label { display: block; font-size: .9rem; margin: 8px 0 4px; }
-header {
-  position: relative;
-  z-index: 2;
-  background: var(--navy);
-  text-align: center;
-  padding: 20px 16px;
-  border-bottom: 2px solid var(--teal);
-}
-header h1 { margin: 0; font-size: clamp(1.4rem, 4vw, 2.2rem); }
-header p { margin: 2px 0; color: #d5e4ff; }
-nav {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 12px;
-}
-nav a { color: #fff; padding: 5px 10px; text-decoration: none; }
-nav a:hover { text-decoration: underline; }
-#scene {
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+button, a { -webkit-tap-highlight-color: transparent; }
+
+/* 動く背景 */
+#background {
   position: fixed;
   inset: 0;
   overflow: hidden;
   pointer-events: none;
   z-index: -1;
-  background:
-    radial-gradient(ellipse at 15% 35%, rgba(0,128,128,.32), transparent 45%),
-    radial-gradient(ellipse at 85% 75%, rgba(53,94,180,.35), transparent 45%),
-    linear-gradient(135deg,#07152d,#132b48,#07152d);
-  background-size: 200% 200%;
-  animation: glow 14s ease-in-out infinite alternate;
 }
-@keyframes glow { to { background-position: 100% 100%; } }
-.particle {
+.orb {
   position: absolute;
-  top: -50px;
-  color: #f8e6b5;
-  opacity: .32;
-  animation: drift linear infinite;
-  text-shadow: 0 0 12px #ffe9b0;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  filter: blur(35px);
+  opacity: .22;
+  animation: float 18s ease-in-out infinite alternate;
 }
-@keyframes drift {
-  0% { transform: translate(0,0) rotate(0); }
-  50% { transform: translate(45px,50vh) rotate(180deg); }
-  100% { transform: translate(-20px,110vh) rotate(360deg); }
+.orb:nth-child(1) {
+  background: #00b8a9;
+  top: 10%;
+  left: -100px;
 }
-main { max-width: 1100px; margin: 28px auto; padding: 0 18px; }
-.panel {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 24px;
-  margin-bottom: 24px;
-  box-shadow: 0 12px 35px rgba(0,0,0,.18);
-  backdrop-filter: blur(8px);
+.orb:nth-child(2) {
+  background: #7777ff;
+  right: -100px;
+  top: 45%;
+  animation-delay: -7s;
+  animation-duration: 24s;
 }
-h2 { border-bottom: 2px solid var(--teal); padding-bottom: 8px; }
-.muted { color: var(--muted); }
-.toolbar, .stats, .actions, .filters {
+.orb:nth-child(3) {
+  background: #ffcc7a;
+  left: 40%;
+  bottom: -150px;
+  animation-delay: -4s;
+}
+@keyframes float {
+  from { transform: translate(0,0) scale(.9); }
+  to { transform: translate(55px,-40px) scale(1.15); }
+}
+.sparkle {
+  position: absolute;
+  color: var(--teal);
+  opacity: .45;
+  animation: sparkle 12s linear infinite;
+}
+.sparkle:nth-child(4) { left: 18%; top: 70%; }
+.sparkle:nth-child(5) { left: 75%; top: 25%; animation-delay: -4s; }
+.sparkle:nth-child(6) { left: 88%; top: 80%; animation-delay: -8s; }
+@keyframes sparkle {
+  from { transform: translateY(30px) rotate(0); opacity: 0; }
+  20% { opacity: .5; }
+  to { transform: translateY(-100px) rotate(120deg); opacity: 0; }
+}
+
+/* かわいいカーソル */
+#cursor {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  pointer-events: none;
+  font-size: 25px;
+  transform: translate(-50%,-50%);
+  filter: drop-shadow(0 3px 5px #0002);
+}
+#cursor::after {
+  content: "✦";
+  color: #ffbf45;
+  position: absolute;
+  top: -9px;
+  right: -8px;
+  font-size: 13px;
+  animation: twinkle 1.4s infinite alternate;
+}
+#cursor.hover { transform: translate(-50%,-50%) scale(1.35) rotate(-10deg); }
+@keyframes twinkle {
+  to { transform: rotate(40deg) scale(1.4); opacity: .5; }
+}
+@media (pointer:fine) {
+  #cursor { display: block; }
+  body, button, a, input, select, textarea { cursor: none; }
+}
+body.no-motion *, body.no-motion *::before, body.no-motion *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* ヘッダー */
+header {
+  color: white;
+  background: linear-gradient(130deg,#00004e,var(--navy),#006e70);
+  padding: 25px max(22px, calc((100% - 1120px)/2));
+}
+.top {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  justify-content: space-between;
   align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
-.stats { margin-top: 16px; }
-.stat {
-  flex: 1 1 130px;
-  background: rgba(0,128,128,.15);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 12px;
+.brand { letter-spacing: .14em; color: #bce9e7; font-size: .85rem; }
+.header-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+.header-buttons button, nav a {
+  color: white;
+  border: 1px solid #ffffff55;
+  border-radius: 30px;
+  padding: 8px 13px;
+  background: #ffffff12;
+  text-decoration: none;
 }
-.stat strong { display: block; font-size: 1.5rem; color: var(--gold); }
-.filters > * { flex: 1 1 170px; }
-#search { flex: 2 1 240px; }
+.hero { padding: 48px 0 30px; max-width: 760px; }
+.eyebrow { color: #90e3dd; letter-spacing: .2em; font-size: .8rem; }
+h1 { font-size: clamp(2rem,5vw,3.7rem); line-height: 1.25; margin: 12px 0; }
+.hero p { color: #e0eaff; }
+nav { display: flex; gap: 10px; flex-wrap: wrap; }
+main { width: min(1120px, calc(100% - 32px)); margin: auto; }
+section { padding: 34px 0; }
+.section-title {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+h2 { margin: 0; font-size: clamp(1.5rem,3vw,2rem); }
+.muted { color: var(--muted); }
+.btn {
+  border: 0;
+  border-radius: 12px;
+  padding: 10px 15px;
+  background: var(--navy);
+  color: white;
+  font-weight: 700;
+}
+.btn.teal { background: var(--teal); }
+.btn.light { background: transparent; color: var(--text); border: 1px solid #9aa8bb66; }
+.btn.danger { background: #b5334a; }
+
+/* 统计卡片 */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 12px;
+}
+.stat, .panel, .book {
+  background: var(--card);
+  border-radius: 18px;
+  box-shadow: 0 12px 35px #0010440c;
+  border: 1px solid #9aa8bb30;
+}
+.stat { padding: 17px; }
+.stat small { color: var(--muted); }
+.stat strong { display: block; font-size: 1.7rem; }
+
+/* 検索と本棚 */
+.filters {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.field {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #9aa8bb65;
+  border-radius: 11px;
+  background: var(--card);
+  color: var(--text);
+  padding: 11px 12px;
+}
+.actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
 .book-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(205px,1fr));
+  grid-template-columns: repeat(4,minmax(0,1fr));
   gap: 16px;
-  margin-top: 18px;
 }
-.book {
-  min-width: 0;
-  padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: 13px;
-  background: rgba(100,150,210,.07);
-  transition: transform .25s, border-color .25s;
-  animation: appear .35s ease both;
-}
-.book:hover { transform: translateY(-5px); border-color: var(--teal); }
-@keyframes appear { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.book { overflow: hidden; display: flex; flex-direction: column; }
 .cover {
-  height: 165px;
-  display: grid;
-  place-items: center;
-  border-radius: 8px;
-  margin-bottom: 12px;
-  overflow: hidden;
-  background: linear-gradient(145deg,#152b50,#008080);
+  min-height: 175px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   color: white;
-  font-size: 3rem;
+  background: linear-gradient(145deg,#000052,#000080 55%,#008080);
+  position: relative;
+  overflow: hidden;
 }
-.cover img { width: 100%; height: 100%; object-fit: cover; }
-.book h3 { margin: 4px 0; line-height: 1.5; }
-.book p { margin: 5px 0; font-size: .9rem; }
-.tag {
-  display: inline-block;
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  padding: 2px 8px;
-  font-size: .75rem;
-  color: var(--muted);
+.cover::before, .cover::after {
+  content: "";
+  position: absolute;
+  border: 1px solid #ffffff45;
+  width: 145px;
+  height: 145px;
+  border-radius: 50%;
+  right: -60px;
+  top: -65px;
 }
-.favorite { color: var(--gold); }
-.small { font-size: .82rem; }
-.actions { margin-top: 12px; }
-.actions button { flex: 1 1 auto; }
-.primary { background: var(--teal); color: white; }
-.danger { border-color: #d66; }
-.empty { text-align: center; padding: 35px 10px; color: var(--muted); }
-.progress {
-  height: 10px; background: rgba(130,160,200,.2);
-  border-radius: 20px; overflow: hidden; margin: 8px 0;
+.cover::after { width: 90px; height: 90px; left: -40px; top: auto; bottom: -40px; }
+.cover-title { font-size: 1.2rem; font-weight: 800; position: relative; z-index: 1; }
+.cover-author { font-size: .82rem; margin-top: 8px; color: #e0ffff; position: relative; z-index: 1; }
+.book-content { padding: 15px; display: flex; flex-direction: column; gap: 9px; flex: 1; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { background: #e2f6f3; color: #086d6a; padding: 3px 9px; border-radius: 20px; font-size: .75rem; }
+.dark .chip { background: #16413f; color: #c3fffa; }
+.book h3 { margin: 0; font-size: 1.1rem; line-height: 1.5; }
+.author { color: var(--muted); font-size: .86rem; }
+.summary { color: var(--muted); font-size: .9rem; margin: 0; }
+.book-buttons { display: flex; gap: 7px; margin-top: auto; padding-top: 6px; }
+.book-buttons button { padding: 8px 10px; font-size: .83rem; }
+.heart { background: transparent; border: 1px solid #d4a1b0; color: #d54869; border-radius: 10px; min-width: 40px; }
+.empty { grid-column: 1/-1; text-align: center; padding: 35px; color: var(--muted); }
+.panel { padding: 20px; }
+.progress-row { display: flex; justify-content: space-between; margin: 12px 0 5px; }
+.track { height: 9px; border-radius: 20px; background: #9aa8bb30; overflow: hidden; }
+.fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg,var(--teal),#52c9b6); }
+.tools { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.timer { font-size: 2rem; font-weight: 800; margin: 10px 0; font-variant-numeric: tabular-nums; }
+footer { background: var(--teal); color: white; padding: 28px max(20px,calc((100% - 1120px)/2)); margin-top: 25px; }
+footer a { color: white; }
+.footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 25px; }
+footer p { margin: 5px 0; }
+.copyright { border-top: 1px solid #ffffff55; padding-top: 12px; margin-top: 20px; font-size: .85rem; }
+
+/* モーダル */
+.modal-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: #071225cc;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
 }
-.progress span { display: block; height: 100%; width: 0; background: var(--teal); transition: width .3s; }
-.form-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px 16px; }
-.full { grid-column: 1 / -1; }
-dialog {
-  width: min(600px,calc(100% - 24px));
-  max-height: 85vh;
-  overflow-y: auto;
+.modal-bg.open { display: flex; }
+.modal {
+  background: var(--card);
   color: var(--text);
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 24px;
+  width: min(620px,100%);
+  max-height: 92vh;
+  overflow: auto;
+  border-radius: 18px;
+  padding: 22px;
 }
-dialog::backdrop { background: rgba(0,0,0,.7); backdrop-filter: blur(4px); }
-dialog h2 { margin-top: 0; }
-#toast {
-  position: fixed; left: 50%; bottom: 110px;
+.modal-head { display: flex; justify-content: space-between; align-items: center; }
+.modal-head h2 { font-size: 1.3rem; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-group.full { grid-column: 1/-1; }
+.form-group label { font-size: .88rem; font-weight: 700; }
+textarea.field { min-height: 95px; resize: vertical; }
+.modal-buttons { display: flex; gap: 8px; justify-content: end; flex-wrap: wrap; margin-top: 18px; }
+.toast {
+  position: fixed;
+  z-index: 100;
+  left: 50%;
+  bottom: 20px;
   transform: translateX(-50%);
-  z-index: 30; background: var(--teal); color: white;
-  border-radius: 10px; padding: 10px 18px;
-  opacity: 0; pointer-events: none; transition: opacity .2s;
+  background: #14243c;
+  color: white;
+  border-radius: 30px;
+  padding: 10px 17px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
 }
-#toast.show { opacity: 1; }
-footer {
-  position: fixed; bottom: 0; left: 0; width: 100%;
-  z-index: 10; text-align: center;
-  background: #008080; color: white;
-  padding: 8px; font-size: 12px;
-  box-shadow: 0 -4px 18px rgba(0,0,0,.2);
+.toast.show { opacity: 1; }
+
+@media(max-width:900px) {
+  .book-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .stats { grid-template-columns: repeat(2,1fr); }
+  .filters { grid-template-columns: 1fr 1fr; }
+  .filters input { grid-column: 1/-1; }
 }
-footer p { margin: 2px; }
-footer a { color: white; margin: 0 6px; }
-#timerDisplay { font-size: 1.5rem; font-weight: bold; }
-@media(max-width:600px) {
-  main { padding: 0 10px; margin: 16px auto; }
-  .panel { padding: 16px; }
+@media(max-width:560px) {
+  header { padding: 20px 16px; }
+  .hero { padding: 34px 0 25px; }
+  main { width: calc(100% - 24px); }
+  .book-grid { gap: 10px; }
+  .cover { min-height: 140px; padding: 12px; }
+  .cover-title { font-size: 1rem; }
+  .book-content { padding: 11px; }
+  .book h3 { font-size: .98rem; }
+  .summary { font-size: .83rem; }
+  .book-buttons { flex-wrap: wrap; }
+  .tools { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: 1fr; }
-  .full { grid-column: auto; }
-  footer { font-size: 10px; }
-  body { padding-bottom: 90px; }
+  .form-group.full { grid-column: auto; }
 }
 @media(prefers-reduced-motion:reduce) {
-  *,*::before,*::after { animation: none !important; scroll-behavior: auto !important; transition: none !important; }
+  *,*::before,*::after { animation: none !important; scroll-behavior: auto !important; }
 }
 </style>
 </head>
 <body>
-<div id="scene" aria-hidden="true"></div>
+<div id="background" aria-hidden="true">
+  <span class="orb"></span><span class="orb"></span><span class="orb"></span>
+  <span class="sparkle">✦</span><span class="sparkle">✧</span><span class="sparkle">✦</span>
+</div>
+<div id="cursor" aria-hidden="true">📖</div>
 
 <header>
-  <h1>📚 髙橋によるおすすめ本紹介</h1>
-  <p>本との出会いが、世界を広げる。</p>
+  <div class="top">
+    <div class="brand">TAKAHASHI'S BOOK NOTES</div>
+    <div class="header-buttons">
+      <button id="themeBtn">☾ ダークモード</button>
+      <button id="motionBtn">背景の動きをオフ</button>
+    </div>
+  </div>
+  <div class="hero">
+    <div class="eyebrow">READ · FEEL · SHARE</div>
+    <h1>髙橋による<br>おすすめ本紹介</h1>
+    <p>心に残る物語を、次に読む誰かへ。お気に入りの一冊を見つけて、読書の記録も残せる小さな本棚です。</p>
+  </div>
   <nav>
-    <a href="#about">はじめに</a>
-    <a href="#shelf">本棚</a>
-    <a href="#record">読書記録</a>
-    <a href="#tools">便利ツール</a>
+    <a href="#books">おすすめ本</a>
+    <a href="#progress">読書の記録</a>
+    <a href="#tools">読書ツール</a>
+    <a href="#contact">お問い合わせ</a>
   </nav>
 </header>
 
 <main>
-  <section id="about" class="panel">
-    <h2>📖 はじめに</h2>
-    <p>こんにちは！僕の名前は髙橋龍樹です！！昔から本が好きで、買えそうな時に本を買ったり、学校の図書館で読んだりしていました。</p>
-    <p>ここでは、僕が好きな本や、いつか読みたい本を紹介します。気になる一冊を見つけていってください！</p>
+  <section>
     <div class="stats">
-      <div class="stat"><span>本棚の冊数</span><strong id="totalCount">0</strong></div>
-      <div class="stat"><span>読了した本</span><strong id="readCount">0</strong></div>
-      <div class="stat"><span>お気に入り</span><strong id="favCount">0</strong></div>
-      <div class="stat"><span>読了率</span><strong id="readRate">0%</strong></div>
+      <div class="stat"><small>本棚の本</small><strong id="total">4</strong></div>
+      <div class="stat"><small>読了した本</small><strong id="read">0</strong></div>
+      <div class="stat"><small>お気に入り</small><strong id="favorites">0</strong></div>
+      <div class="stat"><small>読書時間（分）</small><strong id="minutes">0</strong></div>
     </div>
-    <div class="progress"><span id="progressBar"></span></div>
-    <p id="dailyPick" class="muted">今日の一冊を選んでみよう。</p>
-    <button onclick="randomBook()">🎲 ランダムに一冊選ぶ</button>
   </section>
 
-  <section id="shelf" class="panel">
-    <h2>📚 おすすめの本棚</h2>
-    <p class="muted">本を検索したり、ジャンルで絞り込んだり、お気に入りを集めたりできます。</p>
+  <section id="books">
+    <div class="section-title">
+      <div><h2>おすすめの本</h2><div class="muted">気になる本を見つけてみよう。</div></div>
+      <button class="btn teal" id="addBtn">＋ 本を追加</button>
+    </div>
     <div class="filters">
-      <input id="search" placeholder="🔍 タイトル・著者・感想を検索..." aria-label="本を検索">
-      <select id="genreFilter" aria-label="ジャンルで絞り込み">
-        <option value="">すべてのジャンル</option>
-      </select>
-      <select id="statusFilter" aria-label="読書状況で絞り込み">
+      <input class="field" id="search" placeholder="タイトル・著者・あらすじで検索">
+      <select class="field" id="genre"><option value="">すべてのジャンル</option></select>
+      <select class="field" id="status">
         <option value="">すべての読書状況</option>
-        <option value="読みたい">読みたい</option>
-        <option value="読書中">読書中</option>
-        <option value="読了">読了</option>
+        <option>読みたい</option><option>読書中</option><option>読了</option>
       </select>
-      <select id="sortBy" aria-label="並び替え">
-        <option value="new">登録が新しい順</option>
-        <option value="title">タイトル順</option>
-        <option value="rating">評価が高い順</option>
+      <select class="field" id="sort">
+        <option value="default">おすすめ順</option><option value="title">タイトル順</option>
+        <option value="author">著者順</option><option value="rating">評価順</option>
       </select>
     </div>
-    <p><label><input id="favoritesOnly" type="checkbox" style="width:auto"> ★ お気に入りだけ表示</label></p>
-    <div class="toolbar">
-      <button class="primary" onclick="openBookForm()">＋ 本を追加</button>
-      <button onclick="exportData()">💾 データを書き出す</button>
-      <button onclick="document.getElementById('importFile').click()">📂 データを読み込む</button>
-      <input type="file" id="importFile" accept=".json,application/json" hidden>
+    <div class="actions">
+      <button class="btn light" id="favOnly">♡ お気に入りだけ</button>
+      <button class="btn light" id="randomBtn">🎲 ランダムに1冊</button>
+      <button class="btn light" id="clearBtn">絞り込みリセット</button>
     </div>
-    <div id="bookGrid" class="book-grid"></div>
-    <p id="resultCount" class="muted small"></p>
+    <div class="book-grid" id="bookGrid"></div>
   </section>
 
-  <section id="record" class="panel">
-    <h2>📝 読書記録</h2>
-    <p>本を開いて読書状況・星評価・感想を更新すると、ここに記録されます。</p>
-    <div id="recordList"></div>
+  <section id="progress">
+    <div class="section-title"><div><h2>読書の記録</h2><div class="muted">今の読書状況をひと目でチェック。</div></div></div>
+    <div class="panel" id="progressPanel"></div>
   </section>
 
-  <section id="tools" class="panel">
-    <h2>⏱️ 読書タイマー</h2>
-    <p class="muted">25分集中して読書するポモドーロタイマーです。</p>
-    <div id="timerDisplay">25:00</div>
-    <div class="actions">
-      <button class="primary" id="timerStart">▶ スタート</button>
-      <button id="timerReset">↺ リセット</button>
+  <section id="tools">
+    <div class="section-title"><div><h2>読書ツール</h2><div class="muted">読書時間を測って、本棚データを保存しよう。</div></div></div>
+    <div class="tools">
+      <div class="panel">
+        <h3>⏱ 読書タイマー</h3>
+        <select class="field" id="timerBook"></select>
+        <div class="timer" id="timerDisplay">00:00:00</div>
+        <div class="actions">
+          <button class="btn teal" id="startTimer">▶ スタート</button>
+          <button class="btn light" id="pauseTimer">一時停止</button>
+          <button class="btn light" id="saveTimer">記録してリセット</button>
+        </div>
+        <p class="muted">記録すると、選択した本の読書時間に加算されます。</p>
+      </div>
+      <div class="panel">
+        <h3>📚 本棚データ</h3>
+        <p class="muted">本棚のデータはこのブラウザに自動保存されます。バックアップもできます。</p>
+        <div class="actions">
+          <button class="btn teal" id="exportBtn">JSONを書き出す</button>
+          <button class="btn light" id="importBtn">JSONを読み込む</button>
+          <input type="file" id="importFile" accept=".json,application/json" hidden>
+        </div>
+        <button class="btn danger" id="resetBtn">初期状態に戻す</button>
+      </div>
     </div>
-    <hr style="border-color:var(--line);margin:22px 0">
-    <h3>⚙️ 表示設定</h3>
-    <div class="actions">
-      <button id="themeToggle">☀️ ライト／ダーク切替</button>
-      <button id="fontDown">A− 文字を小さく</button>
-      <button id="fontUp">A＋ 文字を大きく</button>
-      <button id="motionToggle">✨ 背景アニメーション切替</button>
-    </div>
-    <p class="muted small">読書データはこのブラウザに保存されます。別の端末やブラウザとは自動同期されません。</p>
-    <button class="danger" onclick="clearAllData()">保存データをすべて削除</button>
   </section>
 </main>
 
-<footer>
-  <p>お問い合わせ：<a href="mailto:info@example.com">info@example.com</a></p>
-  <p>
-    <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a> |
-    <a href="https://x.com/" target="_blank" rel="noopener noreferrer">X</a> |
-    <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">Facebook</a>
-  </p>
-  <p>© 2026 髙橋によるおすすめ本紹介</p>
+<footer id="contact">
+  <div class="footer-grid">
+    <div><h3>髙橋によるおすすめ本紹介</h3><p>本との出会いが、日々を少し豊かにしますように。</p></div>
+    <div><h3>お問い合わせ</h3><p>メール：<a href="mailto:example@example.com">example@example.com</a></p><p>※公開前に自分の連絡先に変更してください。</p></div>
+    <div><h3>ソーシャル</h3><p><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></p><p><a href="https://x.com/" target="_blank" rel="noopener">X</a></p></div>
+  </div>
+  <div class="copyright">© <span id="year"></span> 髙橋によるおすすめ本紹介</div>
 </footer>
 
-<dialog id="bookDialog">
-  <h2 id="formTitle">本を追加</h2>
-  <form id="bookForm">
-    <div class="form-grid">
-      <div><label for="bookTitle">タイトル *</label><input id="bookTitle" required maxlength="100"></div>
-      <div><label for="bookAuthor">著者</label><input id="bookAuthor" maxlength="100"></div>
-      <div><label for="bookGenre">ジャンル</label>
-        <input id="bookGenre" list="genreOptions" maxlength="40" placeholder="小説、ミステリーなど">
-        <datalist id="genreOptions"><option value="小説"><option value="ファンタジー"><option value="ミステリー"><option value="文学"><option value="自己啓発"><option value="ノンフィクション"><option value="その他"></datalist>
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <div class="modal-head"><h2 id="modalTitle">本を追加</h2><button class="btn light" id="closeModal">閉じる ✕</button></div>
+    <form id="bookForm">
+      <input id="bookId" type="hidden">
+      <div class="form-grid">
+        <div class="form-group"><label for="titleInput">タイトル *</label><input class="field" id="titleInput" required maxlength="120"></div>
+        <div class="form-group"><label for="authorInput">著者 *</label><input class="field" id="authorInput" required maxlength="100"></div>
+        <div class="form-group"><label for="genreInput">ジャンル</label><input class="field" id="genreInput" list="genreList"><datalist id="genreList"><option>ミステリー</option><option>恋愛・ヒューマンドラマ</option><option>恋愛・ファンタジー</option><option>歴史・実話</option><option>文学</option></datalist></div>
+        <div class="form-group"><label for="statusInput">読書状況</label><select class="field" id="statusInput"><option>読みたい</option><option>読書中</option><option>読了</option></select></div>
+        <div class="form-group"><label for="ratingInput">評価</label><select class="field" id="ratingInput"><option value="0">未評価</option><option value="1">★☆☆☆☆</option><option value="2">★★☆☆☆</option><option value="3">★★★☆☆</option><option value="4">★★★★☆</option><option value="5">★★★★★</option></select></div>
+        <div class="form-group"><label for="favoriteInput">お気に入り</label><select class="field" id="favoriteInput"><option value="false">いいえ</option><option value="true">はい ♥</option></select></div>
+        <div class="form-group full"><label for="descriptionInput">あらすじ</label><textarea class="field" id="descriptionInput"></textarea></div>
+        <div class="form-group full"><label for="memoInput">自分用メモ・感想</label><textarea class="field" id="memoInput"></textarea></div>
       </div>
-      <div><label for="bookStatus">読書状況</label>
-        <select id="bookStatus"><option>読みたい</option><option>読書中</option><option>読了</option></select>
-      </div>
-      <div><label for="bookRating">評価</label>
-        <select id="bookRating"><option value="0">未評価</option><option value="1">★☆☆☆☆</option><option value="2">★★☆☆☆</option><option value="3">★★★☆☆</option><option value="4">★★★★☆</option><option value="5">★★★★★</option></select>
-      </div>
-      <div><label for="bookCover">表紙画像URL（任意）</label><input id="bookCover" type="url" placeholder="https://..."></div>
-      <div class="full"><label for="bookDescription">あらすじ・紹介</label><textarea id="bookDescription" rows="3" maxlength="1500"></textarea></div>
-      <div class="full"><label for="bookMemo">自分の感想・メモ</label><textarea id="bookMemo" rows="3" maxlength="3000"></textarea></div>
-    </div>
-    <p class="muted small">タイトル以外はあとから編集できます。</p>
-    <div class="actions">
-      <button type="submit" class="primary">保存する</button>
-      <button type="button" onclick="closeBookForm()">キャンセル</button>
-    </div>
-  </form>
-</dialog>
-
-<dialog id="detailDialog">
-  <div id="detailContent"></div>
-  <div class="actions"><button onclick="document.getElementById('detailDialog').close()">閉じる</button></div>
-</dialog>
-<div id="toast" role="status" aria-live="polite"></div>
+      <div class="modal-buttons"><button type="button" class="btn light" id="cancelModal">キャンセル</button><button class="btn teal" type="submit">保存する</button></div>
+    </form>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
 
 <script>
 "use strict";
 
-const STORAGE_KEY = "takahashiBookLibraryV1";
+const KEY = "takahashiBookLibraryV3";
 const initialBooks = [
-  {id:"demo1",title:"君の名は。",author:"新海 誠",genre:"小説",status:"読みたい",rating:0,favorite:false,cover:"",description:"時を超えてつながる、ふたりの出会いを描いた物語。",memo:"",created:1},
-  {id:"demo2",title:"アルケミスト",author:"パウロ・コエーリョ",genre:"文学",status:"読みたい",rating:0,favorite:false,cover:"",description:"夢を追う旅を通して、自分の人生を見つめ直す物語。",memo:"",created:2},
-  {id:"demo3",title:"ノルウェイの森",author:"村上 春樹",genre:"文学",status:"読みたい",rating:0,favorite:false,cover:"",description:"喪失や成長、若者たちの心を描いた小説。",memo:"",created:3}
+  {
+    id:"b1", title:"容疑者Xの献身", author:"東野圭吾",
+    genre:"ミステリー", status:"読みたい", rating:0, favorite:false,
+    description:"天才数学者・石神は、隣人の花岡靖子がある事件に関わったことを知り、彼女を守るために緻密な計画を立てる。一方、物理学者の湯川は事件の不自然さに気づき、真相へと迫っていく。論理の先にある愛と献身を描くミステリー。",
+    memo:"", minutes:0, created:1
+  },
+  {
+    id:"b2", title:"汝、星のごとく", author:"凪良ゆう",
+    genre:"恋愛・ヒューマンドラマ", status:"読みたい", rating:0, favorite:false,
+    description:"瀬戸内の島で出会った暁海と櫂。家族の事情を抱える二人は、互いに惹かれ合いながらも、自分の人生をどう生きるのかという選択に向き合っていく。愛すること、自分らしく生きることを問いかける物語。",
+    memo:"", minutes:0, created:2
+  },
+  {
+    id:"b3", title:"フォルトゥナの瞳", author:"百田尚樹",
+    genre:"恋愛・ファンタジー", status:"読みたい", rating:0, favorite:false,
+    description:"人の体が透けて見え、死が近づいた人を見分ける不思議な能力を得た木山慎一郎。目の前の命を救うべきか、それとも運命を受け入れるべきか。能力に翻弄されながら、大切な人への思いと命の意味に向き合う物語。",
+    memo:"", minutes:0, created:3
+  },
+  {
+    id:"b4", title:"ラーゲリより愛を込めて", author:"辺見じゅん・林民夫",
+    genre:"歴史・実話", status:"読みたい", rating:0, favorite:false,
+    description:"第二次世界大戦後、シベリアの収容所（ラーゲリ）に抑留された山本幡男。過酷な環境の中でも希望を失わず、仲間たちを励ましながら、妻や子どもたちの待つ日本への帰還を信じ続ける。実話をもとに、希望と家族への愛を描く物語。",
+    memo:"", minutes:0, created:4
+  }
 ];
 
+const $ = id => document.getElementById(id);
+const clone = data => JSON.parse(JSON.stringify(data));
 let books = loadBooks();
-let editingId = null;
-let timerSeconds = 25 * 60;
-let timerInterval = null;
-let fontSize = Number(localStorage.getItem("bookFontSize")) || 16;
-let motionOff = localStorage.getItem("bookMotionOff") === "true";
-let toastTimeout;
+let favOnly = false;
+let seconds = 0;
+let timer = null;
+let running = false;
 
 function loadBooks() {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved === null) return initialBooks.map(b => ({...b}));
-    const parsed = JSON.parse(saved);
-    return Array.isArray(parsed) ? parsed : initialBooks.map(b => ({...b}));
-  } catch {
-    return initialBooks.map(b => ({...b}));
-  }
+    const saved = localStorage.getItem(KEY);
+    if (saved) {
+      const data = JSON.parse(saved);
+      if (Array.isArray(data)) return data;
+    }
+  } catch(e) {}
+  return clone(initialBooks);
 }
-function saveBooks() {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
-    renderAll();
-  } catch {
-    toast("保存できませんでした。データを書き出して保管してください。");
-  }
+function save() {
+  try { localStorage.setItem(KEY, JSON.stringify(books)); }
+  catch(e) { notify("保存できませんでした。"); }
 }
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+function esc(value="") {
+  return String(value).replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
   })[c]);
 }
-function safeCover(url) {
-  try {
-    const u = new URL(url);
-    return ["http:","https:"].includes(u.protocol) ? u.href : "";
-  } catch { return ""; }
+function notify(message) {
+  $("toast").textContent = message;
+  $("toast").classList.add("show");
+  clearTimeout(notify.timeout);
+  notify.timeout = setTimeout(()=>$("toast").classList.remove("show"),2200);
 }
-function toast(message) {
-  const el = document.getElementById("toast");
-  el.textContent = message;
-  el.classList.add("show");
-  clearTimeout(toastTimeout);
-  toastTimeout = setTimeout(() => el.classList.remove("show"), 2300);
-}
-function renderAll() {
-  renderGenres();
-  renderBooks();
-  renderStats();
-  renderRecords();
-}
-function renderGenres() {
-  const select = document.getElementById("genreFilter");
-  const old = select.value;
-  const genres = [...new Set(books.map(b => b.genre).filter(Boolean))].sort();
-  select.innerHTML = '<option value="">すべてのジャンル</option>' +
-    genres.map(g => `<option value="${escapeHTML(g)}">${escapeHTML(g)}</option>`).join("");
-  if (genres.includes(old)) select.value = old;
-}
-function renderBooks() {
-  const query = document.getElementById("search").value.trim().toLowerCase();
-  const genre = document.getElementById("genreFilter").value;
-  const status = document.getElementById("statusFilter").value;
-  const sort = document.getElementById("sortBy").value;
-  const favoritesOnly = document.getElementById("favoritesOnly").checked;
+function getBook(id) { return books.find(b=>b.id===id); }
+function stars(n) { return n ? "★".repeat(n)+"☆".repeat(5-n) : "未評価"; }
 
-  let list = books.filter(b => {
-    const haystack = [b.title,b.author,b.genre,b.description,b.memo].join(" ").toLowerCase();
-    return haystack.includes(query) &&
-      (!genre || b.genre === genre) &&
-      (!status || b.status === status) &&
-      (!favoritesOnly || b.favorite);
-  });
-  if (sort === "title") list.sort((a,b) => a.title.localeCompare(b.title,"ja"));
-  if (sort === "rating") list.sort((a,b) => b.rating-a.rating);
-  if (sort === "new") list.sort((a,b) => b.created-a.created);
+function render() {
+  const query = $("search").value.trim().toLowerCase();
+  const genre = $("genre").value;
+  const status = $("status").value;
+  const sort = $("sort").value;
+  let list = books.filter(b =>
+    (!query || [b.title,b.author,b.description,b.memo,b.genre].some(v=>String(v||"").toLowerCase().includes(query))) &&
+    (!genre || b.genre===genre) &&
+    (!status || b.status===status) &&
+    (!favOnly || b.favorite)
+  );
+  if (sort==="title") list.sort((a,b)=>a.title.localeCompare(b.title,"ja"));
+  if (sort==="author") list.sort((a,b)=>a.author.localeCompare(b.author,"ja"));
+  if (sort==="rating") list.sort((a,b)=>(b.rating||0)-(a.rating||0));
+  if (sort==="default") list.sort((a,b)=>(a.created||0)-(b.created||0));
 
-  document.getElementById("resultCount").textContent = `${list.length}冊を表示中（全${books.length}冊）`;
-  const grid = document.getElementById("bookGrid");
-  if (!list.length) {
-    grid.innerHTML = '<div class="empty" style="grid-column:1/-1">📭 本が見つかりません。検索条件を変えるか、本を追加してみてください。</div>';
-    return;
-  }
-  grid.innerHTML = list.map(b => {
-    const cover = safeCover(b.cover);
-    return `<article class="book">
-      <div class="cover">${cover ? `<img src="${escapeHTML(cover)}" alt="${escapeHTML(b.title)}の表紙" loading="lazy" onerror="this.remove();this.parentElement.textContent='📚'">` : "📚"}</div>
-      <div class="toolbar"><span class="tag">${escapeHTML(b.genre || "ジャンル未設定")}</span><span class="tag">${escapeHTML(b.status)}</span></div>
-      <h3>${escapeHTML(b.title)}</h3>
-      <p class="muted">${escapeHTML(b.author || "著者未設定")}</p>
-      <p class="favorite">${b.rating ? "★".repeat(b.rating)+"☆".repeat(5-b.rating) : "未評価"} ${b.favorite ? "　♥ お気に入り" : ""}</p>
-      <p>${escapeHTML((b.description || "紹介文はまだありません。").slice(0,85))}${(b.description || "").length>85 ? "…" : ""}</p>
-      <div class="actions">
-        <button class="primary" onclick="showDetails('${b.id}')">詳細</button>
-        <button onclick="toggleFavorite('${b.id}')" aria-label="お気に入り切替">${b.favorite ? "♥" : "♡"}</button>
-        <button onclick="openBookForm('${b.id}')">編集</button>
-        <button class="danger" onclick="deleteBook('${b.id}')">削除</button>
+  $("bookGrid").innerHTML = list.length ? list.map(b=>`
+    <article class="book">
+      <div class="cover">
+        <div><div class="cover-title">${esc(b.title)}</div><div class="cover-author">${esc(b.author)}</div></div>
       </div>
-    </article>`;
-  }).join("");
+      <div class="book-content">
+        <div class="chips"><span class="chip">${esc(b.genre||"その他")}</span><span class="chip">${esc(b.status)}</span></div>
+        <h3>${esc(b.title)}</h3>
+        <div class="author">著者：${esc(b.author)}</div>
+        <div style="color:#d99417">${stars(Number(b.rating)||0)}</div>
+        <p class="summary">${esc(b.description||"あらすじは未登録です。")}</p>
+        <div class="book-buttons">
+          <button class="btn teal" data-detail="${esc(b.id)}">詳細・状況</button>
+          <button class="heart" data-fav="${esc(b.id)}" aria-label="お気に入り">${b.favorite?"♥":"♡"}</button>
+          <button class="btn light" data-edit="${esc(b.id)}">編集</button>
+        </div>
+      </div>
+    </article>`).join("") : `<div class="empty">本が見つかりませんでした。検索条件を変えてみてね。</div>`;
+
+  const total = books.length;
+  $("total").textContent = total;
+  $("read").textContent = books.filter(b=>b.status==="読了").length;
+  $("favorites").textContent = books.filter(b=>b.favorite).length;
+  $("minutes").textContent = books.reduce((sum,b)=>sum+(Number(b.minutes)||0),0);
+
+  $("progressPanel").innerHTML = ["読みたい","読書中","読了"].map(s=>{
+    const count=books.filter(b=>b.status===s).length;
+    const pct=total?Math.round(count/total*100):0;
+    return `<div class="progress-row"><strong>${s}</strong><span>${count}冊 · ${pct}%</span></div>
+    <div class="track"><div class="fill" style="width:${pct}%"></div></div>`;
+  }).join("") + `<p class="muted">本棚 ${total}冊。自分のペースで読書を楽しもう。</p>`;
+
+  const previous = $("genre").value;
+  const genres = [...new Set(books.map(b=>b.genre).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"ja"));
+  $("genre").innerHTML = '<option value="">すべてのジャンル</option>' +
+    genres.map(g=>`<option>${esc(g)}</option>`).join("");
+  if (genres.includes(previous)) $("genre").value=previous;
+
+  const oldTimer = $("timerBook").value;
+  $("timerBook").innerHTML = books.map(b=>`<option value="${esc(b.id)}">${esc(b.title)}</option>`).join("");
+  if (books.some(b=>b.id===oldTimer)) $("timerBook").value=oldTimer;
+  save();
 }
-function renderStats() {
-  const read = books.filter(b => b.status === "読了").length;
-  document.getElementById("totalCount").textContent = books.length;
-  document.getElementById("readCount").textContent = read;
-  document.getElementById("favCount").textContent = books.filter(b => b.favorite).length;
-  const rate = books.length ? Math.round(read / books.length * 100) : 0;
-  document.getElementById("readRate").textContent = rate + "%";
-  document.getElementById("progressBar").style.width = rate + "%";
+
+function openForm(id) {
+  const b = id ? getBook(id) : null;
+  $("bookForm").reset();
+  $("bookId").value = b?.id || "";
+  $("modalTitle").textContent = b ? "本を編集" : "本を追加";
+  $("titleInput").value = b?.title || "";
+  $("authorInput").value = b?.author || "";
+  $("genreInput").value = b?.genre || "";
+  $("statusInput").value = b?.status || "読みたい";
+  $("ratingInput").value = String(b?.rating || 0);
+  $("favoriteInput").value = String(!!b?.favorite);
+  $("descriptionInput").value = b?.description || "";
+  $("memoInput").value = b?.memo || "";
+  $("modalBg").classList.add("open");
 }
-function renderRecords() {
-  const list = books.filter(b => b.status !== "読みたい" || b.memo || b.rating);
-  document.getElementById("recordList").innerHTML = list.length ? list
-    .sort((a,b) => b.created-a.created)
-    .map(b => `<div style="border-bottom:1px solid var(--line);padding:10px 0">
-      <strong>${escapeHTML(b.title)}</strong> <span class="tag">${escapeHTML(b.status)}</span>
-      <div class="muted small">${b.rating ? "評価："+"★".repeat(b.rating) : "評価なし"}</div>
-      <p>${escapeHTML(b.memo || "感想はまだ書かれていません。")}</p>
-      <button onclick="openBookForm('${b.id}')">記録を編集</button>
-    </div>`).join("") : '<p class="muted">読書記録はまだありません。本のステータスや感想を更新すると、ここに表示されます。</p>';
-}
-function openBookForm(id=null) {
-  editingId = id;
-  const b = books.find(x => x.id === id);
-  document.getElementById("formTitle").textContent = b ? "本を編集" : "本を追加";
-  document.getElementById("bookTitle").value = b?.title || "";
-  document.getElementById("bookAuthor").value = b?.author || "";
-  document.getElementById("bookGenre").value = b?.genre || "";
-  document.getElementById("bookStatus").value = b?.status || "読みたい";
-  document.getElementById("bookRating").value = b?.rating || 0;
-  document.getElementById("bookCover").value = b?.cover || "";
-  document.getElementById("bookDescription").value = b?.description || "";
-  document.getElementById("bookMemo").value = b?.memo || "";
-  document.getElementById("bookDialog").showModal();
-}
-function closeBookForm() {
-  document.getElementById("bookDialog").close();
-}
-document.getElementById("bookForm").addEventListener("submit", e => {
-  e.preventDefault();
-  const title = document.getElementById("bookTitle").value.trim();
-  if (!title) return;
-  const old = books.find(b => b.id === editingId);
-  const item = {
-    id: old?.id || (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())),
-    title,
-    author: document.getElementById("bookAuthor").value.trim(),
-    genre: document.getElementById("bookGenre").value.trim() || "その他",
-    status: document.getElementById("bookStatus").value,
-    rating: Number(document.getElementById("bookRating").value),
-    cover: safeCover(document.getElementById("bookCover").value.trim()),
-    description: document.getElementById("bookDescription").value.trim(),
-    memo: document.getElementById("bookMemo").value.trim(),
-    favorite: old?.favorite || false,
-    created: old?.created || Date.now()
-  };
-  if (old) books = books.map(b => b.id === old.id ? item : b);
-  else books.push(item);
-  closeBookForm();
-  saveBooks();
-  toast(old ? "本の情報を更新しました！" : "本棚に本を追加しました！");
-});
-function toggleFavorite(id) {
-  books = books.map(b => b.id === id ? {...b,favorite:!b.favorite} : b);
-  saveBooks();
-}
-function deleteBook(id) {
-  const b = books.find(x => x.id === id);
-  if (!b || !confirm(`「${b.title}」を本棚から削除しますか？`)) return;
-  books = books.filter(x => x.id !== id);
-  saveBooks();
-  toast("本を削除しました。");
-}
-function showDetails(id) {
-  const b = books.find(x => x.id === id);
+function closeForm() { $("modalBg").classList.remove("open"); }
+function detail(id) {
+  const b = getBook(id);
   if (!b) return;
-  const cover = safeCover(b.cover);
-  document.getElementById("detailContent").innerHTML = `
-    <h2>${escapeHTML(b.title)}</h2>
-    ${cover ? `<img src="${escapeHTML(cover)}" alt="表紙" style="max-width:150px;max-height:220px;object-fit:contain">` : "<div style='font-size:3rem'>📚</div>"}
-    <p>著者：${escapeHTML(b.author || "未設定")}</p>
-    <p>ジャンル：${escapeHTML(b.genre || "未設定")}</p>
-    <p>読書状況：${escapeHTML(b.status)}</p>
-    <p>評価：${b.rating ? "★".repeat(b.rating)+"☆".repeat(5-b.rating) : "未評価"}</p>
-    <h3>本の紹介</h3><p>${escapeHTML(b.description || "紹介文はありません。").replace(/\n/g,"<br>")}</p>
-    <h3>自分の感想</h3><p>${escapeHTML(b.memo || "感想はまだありません。").replace(/\n/g,"<br>")}</p>
-    <div class="actions">
-      <button class="primary" onclick="document.getElementById('detailDialog').close();openBookForm('${b.id}')">編集・読書記録</button>
-      <button onclick="toggleFavorite('${b.id}');showDetails('${b.id}')">${b.favorite ? "♥ お気に入り解除" : "♡ お気に入りに追加"}</button>
-    </div>`;
-  document.getElementById("detailDialog").showModal();
-}
-function randomBook() {
-  if (!books.length) { toast("まず本を追加してね！"); return; }
-  const b = books[Math.floor(Math.random()*books.length)];
-  document.getElementById("dailyPick").textContent = `🎲 今日の一冊：「${b.title}」／${b.author || "著者未設定"}`;
-  showDetails(b.id);
-}
-function exportData() {
-  const blob = new Blob([JSON.stringify(books,null,2)],{type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "takahashi-books.json";
-  a.click();
-  URL.revokeObjectURL(url);
-  toast("データを書き出しました！");
-}
-document.getElementById("importFile").addEventListener("change", async e => {
-  const file = e.target.files[0];
-  if (!file) return;
-  try {
-    const parsed = JSON.parse(await file.text());
-    if (!Array.isArray(parsed) || !parsed.every(b => b && typeof b.title === "string")) {
-      throw new Error("invalid format");
-    }
-    if (!confirm("現在の本棚を読み込んだデータで置き換えますか？")) return;
-    books = parsed.map((b,i) => ({
-      id: String(b.id || Date.now()+i),
-      title: b.title.slice(0,100),
-      author: String(b.author || "").slice(0,100),
-      genre: String(b.genre || "その他").slice(0,40),
-      status: ["読みたい","読書中","読了"].includes(b.status) ? b.status : "読みたい",
-      rating: Math.max(0,Math.min(5,Number(b.rating)||0)),
-      cover: safeCover(String(b.cover || "")),
-      description: String(b.description || "").slice(0,1500),
-      memo: String(b.memo || "").slice(0,3000),
-      favorite: Boolean(b.favorite),
-      created: Number(b.created) || Date.now()+i
-    }));
-    saveBooks();
-    toast("本棚データを読み込みました！");
-  } catch {
-    toast("ファイルを読み込めませんでした。JSON形式を確認してください。");
-  } finally { e.target.value = ""; }
-});
-function clearAllData() {
-  if (!confirm("本棚・読書記録をすべて削除します。この操作は取り消せません。")) return;
-  books = [];
-  saveBooks();
-  toast("データを削除しました。");
-}
-["search","genreFilter","statusFilter","sortBy","favoritesOnly"].forEach(id => {
-  document.getElementById(id).addEventListener("input",renderBooks);
-  document.getElementById(id).addEventListener("change",renderBooks);
-});
-
-/* 読書タイマー */
-function updateTimer() {
-  const m = String(Math.floor(timerSeconds/60)).padStart(2,"0");
-  const s = String(timerSeconds%60).padStart(2,"0");
-  document.getElementById("timerDisplay").textContent = `${m}:${s}`;
-}
-document.getElementById("timerStart").addEventListener("click",() => {
-  if (timerInterval) {
-    clearInterval(timerInterval); timerInterval = null;
-    document.getElementById("timerStart").textContent = "▶ 再開";
-    return;
+  const next = prompt(
+    `${b.title}\n\n著者：${b.author}\nジャンル：${b.genre}\n\nあらすじ：\n${b.description}\n\n評価：${stars(b.rating)}\nお気に入り：${b.favorite?"はい":"いいえ"}\nメモ：${b.memo||"なし"}\n\n読書状況を変更する場合は「読みたい」「読書中」「読了」と入力してください。\nキャンセルで変更せずに閉じます。`,
+    b.status
+  );
+  if (["読みたい","読書中","読了"].includes(next)) {
+    b.status=next;
+    render();
+    notify("読書状況を更新しました");
   }
-  if (timerSeconds <= 0) timerSeconds = 25*60;
-  document.getElementById("timerStart").textContent = "⏸ 一時停止";
-  timerInterval = setInterval(() => {
-    timerSeconds--;
-    updateTimer();
-    if (timerSeconds <= 0) {
-      clearInterval(timerInterval); timerInterval = null;
-      document.getElementById("timerStart").textContent = "▶ もう一度";
-      toast("25分間の読書、お疲れさま！少し休憩しよう ☕");
-      if ("Notification" in window && Notification.permission === "granted") {
-        new Notification("読書タイマー",{body:"25分間の読書が終わりました！"});
-      }
-    }
-  },1000);
-});
-document.getElementById("timerReset").addEventListener("click",() => {
-  clearInterval(timerInterval); timerInterval = null;
-  timerSeconds = 25*60; updateTimer();
-  document.getElementById("timerStart").textContent = "▶ スタート";
-});
-document.getElementById("themeToggle").addEventListener("click",() => {
-  document.body.classList.toggle("light");
-  localStorage.setItem("bookTheme",document.body.classList.contains("light") ? "light" : "dark");
-});
-if (localStorage.getItem("bookTheme")==="light") document.body.classList.add("light");
-function applyFont() {
-  document.documentElement.style.fontSize = fontSize+"px";
-  localStorage.setItem("bookFontSize",fontSize);
 }
-document.getElementById("fontUp").addEventListener("click",() => {
-  fontSize = Math.min(22,fontSize+1); applyFont();
+$("bookGrid").addEventListener("click",e=>{
+  const fav=e.target.closest("[data-fav]");
+  const edit=e.target.closest("[data-edit]");
+  const det=e.target.closest("[data-detail]");
+  if (fav) {
+    const b=getBook(fav.dataset.fav);
+    if(b) b.favorite=!b.favorite;
+    render();
+  }
+  if (edit) openForm(edit.dataset.edit);
+  if (det) detail(det.dataset.detail);
 });
-document.getElementById("fontDown").addEventListener("click",() => {
-  fontSize = Math.max(12,fontSize-1); applyFont();
-});
-applyFont();
-document.getElementById("motionToggle").addEventListener("click",() => {
-  motionOff = !motionOff;
-  document.getElementById("scene").style.animation = motionOff ? "none" : "";
-  document.querySelectorAll(".particle").forEach(p => p.style.animationPlayState = motionOff ? "paused" : "running");
-  localStorage.setItem("bookMotionOff",String(motionOff));
-  toast(motionOff ? "背景の動きを停止しました。" : "背景の動きを再開しました。");
+$("addBtn").onclick=()=>openForm();
+$("closeModal").onclick=$("cancelModal").onclick=closeForm;
+$("modalBg").addEventListener("click",e=>{if(e.target===$("modalBg"))closeForm();});
+$("bookForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const id=$("bookId").value;
+  const data={
+    title:$("titleInput").value.trim(),
+    author:$("authorInput").value.trim(),
+    genre:$("genreInput").value.trim()||"その他",
+    status:$("statusInput").value,
+    rating:Number($("ratingInput").value),
+    favorite:$("favoriteInput").value==="true",
+    description:$("descriptionInput").value.trim(),
+    memo:$("memoInput").value.trim()
+  };
+  if (!data.title || !data.author) return;
+  if(id) Object.assign(getBook(id),data);
+  else books.push({id:"b"+Date.now(),...data,minutes:0,created:Date.now()});
+  closeForm(); render(); notify(id?"本を更新しました":"本を追加しました");
 });
 
-/* 背景のページ・光の粒 */
-const scene = document.getElementById("scene");
-for (let i=0;i<24;i++) {
-  const p = document.createElement("span");
-  p.className = "particle";
-  p.textContent = i%3===0 ? "✦" : i%3===1 ? "·" : "✧";
-  p.style.left = Math.random()*100+"%";
-  p.style.fontSize = (10+Math.random()*22)+"px";
-  p.style.animationDuration = (12+Math.random()*20)+"s";
-  p.style.animationDelay = (-Math.random()*25)+"s";
-  if (motionOff) p.style.animationPlayState = "paused";
-  scene.appendChild(p);
+["search","genre","status","sort"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",render));
+$("favOnly").onclick=()=>{
+  favOnly=!favOnly;
+  $("favOnly").textContent=favOnly?"♥ お気に入り表示中":"♡ お気に入りだけ";
+  render();
+};
+$("clearBtn").onclick=()=>{
+  $("search").value=""; $("genre").value=""; $("status").value="";
+  $("sort").value="default"; favOnly=false;
+  $("favOnly").textContent="♡ お気に入りだけ"; render();
+};
+$("randomBtn").onclick=()=>{
+  const cards=[...$("bookGrid").querySelectorAll("[data-detail]")];
+  if(cards.length) detail(cards[Math.floor(Math.random()*cards.length)].dataset.detail);
+  else notify("表示中の本がありません");
+};
+
+$("themeBtn").onclick=()=>{
+  document.body.classList.toggle("dark");
+  const dark=document.body.classList.contains("dark");
+  $("themeBtn").textContent=dark?"☀ ライトモード":"☾ ダークモード";
+  localStorage.setItem("takahashiTheme",dark?"dark":"light");
+};
+$("motionBtn").onclick=()=>{
+  document.body.classList.toggle("no-motion");
+  const off=document.body.classList.contains("no-motion");
+  $("motionBtn").textContent=off?"背景の動きをオン":"背景の動きをオフ";
+};
+
+function updateTimer() {
+  const h=Math.floor(seconds/3600);
+  const m=Math.floor(seconds%3600/60);
+  const s=seconds%60;
+  $("timerDisplay").textContent=[h,m,s].map(n=>String(n).padStart(2,"0")).join(":");
 }
-renderAll();
+$("startTimer").onclick=()=>{
+  if(running) return;
+  running=true;
+  timer=setInterval(()=>{seconds++;updateTimer();},1000);
+};
+$("pauseTimer").onclick=()=>{
+  clearInterval(timer); timer=null; running=false;
+};
+$("saveTimer").onclick=()=>{
+  clearInterval(timer); timer=null; running=false;
+  const b=getBook($("timerBook").value);
+  const mins=Math.floor(seconds/60);
+  if(b && mins>0) { b.minutes=(Number(b.minutes)||0)+mins; notify(`${mins}分を記録しました`); }
+  else notify("1分以上計測すると記録できます");
+  seconds=0; updateTimer(); render();
+};
+
+$("exportBtn").onclick=()=>{
+  const blob=new Blob([JSON.stringify(books,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url; a.download="takahashi-books.json"; a.click();
+  URL.revokeObjectURL(url);
+};
+$("importBtn").onclick=()=>$("importFile").click();
+$("importFile").onchange=async e=>{
+  try {
+    const data=JSON.parse(await e.target.files[0].text());
+    if(!Array.isArray(data)||!data.every(b=>b.title&&b.author)) throw Error();
+    if(confirm(`${data.length}冊のデータで本棚を置き換えますか？`)) {
+      books=data.map((b,i)=>({...b,id:String(b.id||"import"+i)}));
+      render(); notify("データを読み込みました");
+    }
+  } catch(err) { notify("JSONファイルを読み込めませんでした"); }
+  e.target.value="";
+};
+$("resetBtn").onclick=()=>{
+  if(confirm("本棚を最初の4冊に戻しますか？")) {
+    books=clone(initialBooks); render(); notify("初期状態に戻しました");
+  }
+};
+
+// 本型カーソル。タッチ端末では標準カーソルを使う。
+(function(){
+  const cursor=$("cursor");
+  if(!matchMedia("(pointer:fine)").matches) return;
+  let raf=0,x=0,y=0;
+  document.addEventListener("mousemove",e=>{
+    x=e.clientX; y=e.clientY;
+    if(!raf) raf=requestAnimationFrame(()=>{
+      cursor.style.left=x+"px"; cursor.style.top=y+"px"; raf=0;
+    });
+  });
+  document.addEventListener("mouseover",e=>{
+    cursor.classList.toggle("hover",!!e.target.closest("button,a,input,select,textarea,.book"));
+  });
+})();
+
+$("year").textContent=new Date().getFullYear();
+if(localStorage.getItem("takahashiTheme")==="dark") {
+  document.body.classList.add("dark");
+  $("themeBtn").textContent="☀ ライトモード";
+}
+render();
 updateTimer();
 </script>
 </body>
