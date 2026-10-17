@@ -4,73 +4,276 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>マイWebサイト</title>
+  <title>髙橋によるおすすめ本紹介</title>
 
   <style>
     * {
       box-sizing: border-box;
     }
 
+    /* ページ全体 */
     body {
       margin: 0;
-      padding-bottom: 150px;
-      font-family: Arial, sans-serif;
+      padding-bottom: 125px;
+      font-family: "Yu Gothic", "Meiryo", sans-serif;
       line-height: 1.8;
-      color: #333;
-      background-color: #f5f7fa;
+      color: #FFFFFF;
+      background: #07152d;
+      overflow-x: hidden;
+
+      /* 本型カーソル */
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M3 6 Q10 3 16 8 Q22 3 29 6 L29 25 Q22 22 16 27 Q10 22 3 25 Z' fill='%23ffffff' stroke='%23008080' stroke-width='2'/%3E%3Cpath d='M16 8 L16 27 M6 10 Q11 8 14 11 M19 11 Q23 8 26 10' fill='none' stroke='%23008080' stroke-width='1.5'/%3E%3C/svg%3E") 16 16, auto;
+    }
+
+    /* 背景のグラデーション */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(ellipse at 20% 30%,
+          rgba(0, 128, 128, 0.35), transparent 45%),
+        radial-gradient(ellipse at 80% 70%,
+          rgba(37, 99, 235, 0.30), transparent 45%),
+        linear-gradient(135deg, #07152d, #142d4b, #07152d);
+      background-size: 200% 200%;
+      animation: backgroundMove 12s ease-in-out infinite alternate;
+    }
+
+    @keyframes backgroundMove {
+      0% {
+        background-position: 0% 0%;
+      }
+      100% {
+        background-position: 100% 100%;
+      }
+    }
+
+    /* 浮かぶ本のページ */
+    .floating-pages {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .page {
+      position: absolute;
+      display: block;
+      width: 32px;
+      height: 44px;
+      background: linear-gradient(
+        135deg, #fff5d8, #d6c29a
+      );
+      opacity: 0.22;
+      border-radius: 2px;
+      box-shadow: 0 0 15px rgba(255, 230, 170, 0.15);
+      animation: floatPage 12s linear infinite;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 5px;
+      width: 20px;
+      height: 1px;
+      background: #8a7857;
+      box-shadow:
+        0 6px #8a7857,
+        0 12px #8a7857,
+        0 18px #8a7857;
+      opacity: 0.65;
+    }
+
+    .page:nth-child(1) {
+      left: 8%;
+      animation-duration: 15s;
+      animation-delay: -3s;
+    }
+
+    .page:nth-child(2) {
+      left: 25%;
+      width: 24px;
+      height: 34px;
+      animation-duration: 19s;
+      animation-delay: -10s;
+    }
+
+    .page:nth-child(3) {
+      left: 45%;
+      animation-duration: 17s;
+      animation-delay: -6s;
+    }
+
+    .page:nth-child(4) {
+      left: 65%;
+      width: 26px;
+      height: 36px;
+      animation-duration: 14s;
+      animation-delay: -8s;
+    }
+
+    .page:nth-child(5) {
+      left: 83%;
+      animation-duration: 20s;
+      animation-delay: -2s;
+    }
+
+    .page:nth-child(6) {
+      left: 95%;
+      width: 22px;
+      height: 30px;
+      animation-duration: 16s;
+      animation-delay: -12s;
+    }
+
+    @keyframes floatPage {
+      0% {
+        top: 110%;
+        transform: translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      15% {
+        opacity: 0.25;
+      }
+      50% {
+        transform: translateX(55px) rotate(150deg);
+      }
+      85% {
+        opacity: 0.2;
+      }
+      100% {
+        top: -60px;
+        transform: translateX(-35px) rotate(360deg);
+        opacity: 0;
+      }
     }
 
     /* ヘッダー */
     header {
       background-color: #000080;
-      color: white;
       text-align: center;
-      padding: 25px;
+      padding: 22px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     header h1 {
       margin: 0;
       font-size: 28px;
+      letter-spacing: 2px;
+    }
+
+    header p {
+      margin: 4px 0 0;
+      color: #cbdcf5;
+      font-size: 13px;
     }
 
     /* メインコンテンツ */
     main {
-      max-width: 800px;
+      max-width: 900px;
       margin: 40px auto;
       padding: 0 20px;
       color: #FFFFFF;
     }
 
     section {
-      background-color: #333;
-      margin-bottom: 25px;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      margin-bottom: 30px;
+      padding: 28px;
+      border: 1px solid rgba(173, 216, 230, 0.4);
+      border-radius: 14px;
+      background: rgba(5, 20, 43, 0.78);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(5px);
     }
 
     section h2 {
+      margin-top: 0;
       color: #FFFFFF;
-      border-bottom: 2px solid #dbeafe;
-      padding-bottom: 8px;
+      border-bottom: 2px solid #008080;
+      padding-bottom: 10px;
     }
 
-    /* フッターを画面下部に固定 */
+    section p {
+      color: #FFFFFF;
+    }
+
+    /* 本のカード */
+    .book-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .book-card {
+      padding: 18px 14px;
+      text-align: center;
+      border: 1px solid rgba(147, 197, 253, 0.3);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      transition: transform 0.3s, background-color 0.3s;
+    }
+
+    .book-card:hover {
+      transform: translateY(-6px);
+      background: rgba(0, 128, 128, 0.2);
+    }
+
+    .book-icon {
+      font-size: 42px;
+      margin-bottom: 8px;
+    }
+
+    .book-card h3 {
+      font-size: 17px;
+      margin: 5px 0;
+    }
+
+    .book-card p {
+      font-size: 14px;
+    }
+
+    /* リンクのカーソル */
+    a {
+      cursor: pointer;
+    }
+
+    .book-link {
+      display: inline-block;
+      color: #FFFFFF;
+      border: 1px solid #008080;
+      border-radius: 20px;
+      padding: 5px 16px;
+      text-decoration: none;
+      font-size: 13px;
+      transition: background-color 0.2s;
+    }
+
+    .book-link:hover {
+      background-color: #008080;
+    }
+
+    /* フッター */
     footer {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
       background-color: #008080;
-      color: white;
+      color: #FFFFFF;
       text-align: center;
       padding: 10px;
-      font-size: 14px;
-      z-index: 1000;
+      font-size: 13px;
+      z-index: 10;
+      box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
     }
 
     footer p {
-      margin: 3px 0;
+      margin: 2px 0;
     }
 
     footer a {
@@ -86,27 +289,43 @@
     /* スマートフォン対応 */
     @media (max-width: 600px) {
       header h1 {
-        font-size: 23px;
+        font-size: 21px;
       }
 
       main {
-        margin: 20px auto;
+        margin: 24px auto;
+        padding: 0 14px;
       }
 
       section {
-        padding: 18px; 
+        padding: 18px;
+      }
+
+      .book-list {
+        grid-template-columns: 1fr;
       }
 
       footer {
-        font-size: 12px;
+        font-size: 11px;
+        padding: 8px 4px;
       }
 
       footer a {
-        margin: 0 5px;
+        margin: 0 4px;
       }
 
       body {
-        padding-bottom: 130px;
+        padding-bottom: 110px;
+      }
+    }
+
+    /* 動きを減らす設定の端末ではアニメーションを停止 */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
       }
     }
   </style>
@@ -114,32 +333,79 @@
 
 <body>
 
+  <!-- 動く背景 -->
+  <div class="floating-pages" aria-hidden="true">
+    <span class="page"></span>
+    <span class="page"></span>
+    <span class="page"></span>
+    <span class="page"></span>
+    <span class="page"></span>
+    <span class="page"></span>
+  </div>
+
   <!-- ヘッダー -->
   <header>
     <h1>髙橋によるおすすめ本紹介</h1>
-     <img src="https://github.com/ryuki-318/test/blob/main/cupcake.jpg?raw=true" alt="サンプル">
+    <p>本との出会いが、世界を広げる。</p>
   </header>
 
-  <!-- メインコンテンツ -->
+  <!-- メイン -->
   <main>
     <section>
-      <h2>はじめに</h2>
+      <h2>📖 はじめに</h2>
       <p>
-        こんにちは! 僕の名前は髙橋龍樹です！！
-        昔から本が好きだったので金欠ながら本を買えそうな時はかったり、
+        こんにちは！僕の名前は髙橋龍樹です！！
+        昔から本が好きだったので、金欠ながら本を買えそうな時は買ったり、
         学校の図書館で読んでいました。
-        これから紹介する本は僕が個人的に好きな本やいつか読みたい本です！！
-        ほとんど有名どころですがご了承ください。
+      </p>
+      <p>
+        これから紹介する本は、僕が個人的に好きな本や、
+        いつか読みたい本です！！
+        ほとんど有名どころですが、ご了承ください。
       </p>
     </section>
 
     <section>
-      <h2>おすすめの本</h2>
+      <h2>📚 おすすめの本</h2>
       <p>
-        ここでは、僕が個人的に好きな本や、
-        いつか読んでみたいと思っている本を紹介します。
-        ぜひ、自分のお気に入りの一冊を見つけてみてください！
+        ここでは、おすすめの本や気になっている本を紹介します。
+        あなたのお気に入りの一冊も見つかるかもしれません！
       </p>
+
+      <div class="book-list">
+        <article class="book-card">
+          <div class="book-icon" aria-hidden="true">📘</div>
+          <h3>おすすめ本 1</h3>
+          <p>心に残る物語に出会いたい人に。</p>
+          <a class="book-link"
+             href="https://www.google.com/search?q=おすすめ小説"
+             target="_blank" rel="noopener noreferrer">
+            本を調べる →
+          </a>
+        </article>
+
+        <article class="book-card">
+          <div class="book-icon" aria-hidden="true">📗</div>
+          <h3>おすすめ本 2</h3>
+          <p>新しい考え方を知りたい人に。</p>
+          <a class="book-link"
+             href="https://www.google.com/search?q=人気の小説"
+             target="_blank" rel="noopener noreferrer">
+            本を調べる →
+          </a>
+        </article>
+
+        <article class="book-card">
+          <div class="book-icon" aria-hidden="true">📕</div>
+          <h3>いつか読みたい本</h3>
+          <p>次に読んでみたい気になる一冊。</p>
+          <a class="book-link"
+             href="https://www.google.com/search?q=話題の本"
+             target="_blank" rel="noopener noreferrer">
+            本を調べる →
+          </a>
+        </article>
+      </div>
     </section>
   </main>
 
@@ -147,18 +413,16 @@
   <footer>
     <p>
       お問い合わせ：
-      <a href="mailto:info@example.com">
-        info@example.com
-      </a>
+      <a href="mailto:info@example.com">info@example.com</a>
     </p>
 
     <p>
       <a href="https://www.instagram.com/"
          target="_blank" rel="noopener noreferrer">Instagram</a>
-
+      |
       <a href="https://x.com/"
          target="_blank" rel="noopener noreferrer">X</a>
-
+      |
       <a href="https://www.facebook.com/"
          target="_blank" rel="noopener noreferrer">Facebook</a>
     </p>
